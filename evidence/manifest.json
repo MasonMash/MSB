@@ -1,0 +1,166 @@
+{
+  "deduplicated_findings": [
+    "E-001",
+    "E-002",
+    "E-003",
+    "E-004",
+    "E-005",
+    "E-006",
+    "E-007",
+    "E-008",
+    "E-009",
+    "E-010"
+  ],
+  "experiments": {
+    "EXP-001-R2": {
+      "aggregate_metrics": {
+        "completion_tokens": 88646,
+        "prompt_tokens": 64318,
+        "total_cost_usd": 1.146151966,
+        "total_latency_ms": 1540188.8599999999,
+        "total_tokens": 152964
+      },
+      "files": [
+        {
+          "file": "round-01.json",
+          "sha256": "aa112cb9ea495ef61b87f9b4877ece3d3fc970df140b65c2f65499abb2ccd6ed",
+          "size_bytes": 25651
+        },
+        {
+          "file": "round-02.json",
+          "sha256": "8dfd78bc556120a0a41798b1759dc0cf32a5943a2b667cc68c49c4ecc6c37e28",
+          "size_bytes": 49406
+        },
+        {
+          "file": "round-03.json",
+          "sha256": "69e9dde510a5f2f396e1c05e96f0be81f8be6623e193f7821011ba3d3089785b",
+          "size_bytes": 18688
+        },
+        {
+          "file": "round-04.json",
+          "sha256": "0b25517e63688435821fd41ad4f42576c8f8ec2875ddf48c8ac66cc91bf3963d",
+          "size_bytes": 36144
+        },
+        {
+          "file": "round-05.json",
+          "sha256": "d50936a7e358481554250d3283d1c91e4648b9d0594a77542a6848bad116cf25",
+          "size_bytes": 46160
+        },
+        {
+          "file": "round-06.json",
+          "sha256": "d708947141dbb7c464cc11886d193898f58644d23d977dbd23332d6434aeda91",
+          "size_bytes": 44122
+        },
+        {
+          "file": "round-07.json",
+          "sha256": "4a3cfd90341b8165e4a1c01e01089836137c1b3ebc274546ca482a3c42903150",
+          "size_bytes": 27710
+        },
+        {
+          "file": "round-08.json",
+          "sha256": "da29bfdc4d8577414ea6dbbd2697fb3408206638669bed36d7c64cdd3a69a4dd",
+          "size_bytes": 22799
+        },
+        {
+          "file": "round-09.json",
+          "sha256": "bd8a522e73e409547d41af1ef644fc8b34da7ffafd433393a2f814f065cf8e89",
+          "size_bytes": 28741
+        },
+        {
+          "file": "round-10.json",
+          "sha256": "fe263a0c9350ad7ae4c65ba60e752589684b000709def069e5f95c298ee39e8a",
+          "size_bytes": 6654
+        },
+        {
+          "file": "round-11.json",
+          "sha256": "25eb82cfeda80bd14f990b3537944eafca08346548aa56ed43403bcc1f90515f",
+          "size_bytes": 9884
+        },
+        {
+          "file": "round-12.json",
+          "sha256": "06a0bb094ff9b4d73d3a12ca5bf679ec28fa0a6ce7606315b1160e1bc6339804",
+          "size_bytes": 14388
+        },
+        {
+          "file": "metrics.json",
+          "sha256": "33f189dd7c7f9d4cc28061917c3a5b761f64a8d12946f8c5a05e2087699b7ac5",
+          "size_bytes": 3658
+        }
+      ],
+      "manifest_schema": "file_sha256_size_bytes_v1",
+      "manifest_sha256": "390bc22fcaf867c543762c2f39115a60eb3054f64adcb76aa6bcb0cd8fcbc7b7",
+      "round_count": 12,
+      "source_identity_manifest_schema": "name_sha256_size_v1",
+      "source_identity_manifest_sha256": "7f7b39ca197f763139a74390a008ec314f366ac1272595f8a1d6a4cb8733a824",
+      "status": "canonical_completed"
+    },
+    "EXP-002": {
+      "files": [
+        {
+          "file": "round-01.json",
+          "sha256": "707b101ebef6a62f056d32daf5807adc557a3b927af20979a07173db198ad73c",
+          "size_bytes": 21391
+        },
+        {
+          "file": "round-02.json",
+          "sha256": "c64eaab329658b9fdf2e239bbb428be484858420cad1d6a0da795894c54ae4e9",
+          "size_bytes": 400
+        },
+        {
+          "file": "metrics.json",
+          "sha256": "bcfd9b561f5850a34c75ca8e7c4fc32e9c4888094d79dae64b15a6714df8d5e8",
+          "size_bytes": 1073
+        }
+      ],
+      "manifest_schema": "file_sha256_size_bytes_v1",
+      "manifest_sha256": "f03489a58233205dada49c17f02e575e8afc395e6e1677b0315b538e26b3d717",
+      "recorded_metrics_note": "The canonical EXP-002 metrics undercount the rejected Round 2 provider usage because the original rejection branch discarded that usage before the accounting fix.",
+      "round_count": 2,
+      "round_statuses": [
+        {
+          "model": "openai/gpt-5.6-sol",
+          "role": "INITIAL_ARCHITECT",
+          "round": 1,
+          "status": "PASS"
+        },
+        {
+          "model": "anthropic/claude-opus-5",
+          "role": "CRITICAL_REVIEWER",
+          "round": 2,
+          "status": "SCHEMA_REJECTED"
+        }
+      ],
+      "source_identity_manifest_schema": "name_sha256_size_v1",
+      "source_identity_manifest_sha256": "a40e839a25407210aa26a689c8923696f70c457f9112bc18032a494f9751d2bf",
+      "status": "canonical_fail_closed_schema_rejection"
+    },
+    "EXP-003-TARGETED-CONFORMANCE": {
+      "credit_usage": false,
+      "implementation_sha256": {
+        "closure.py": "09896f67a5e5ef6a16d7a6d52ae8f071d1ec7717aa533b4d61772d8655e46315",
+        "content_addressing.py": "5ae4ac8058d5c5101dac96bcba1ea7ed0cb6ee4ad2ab6342435e5c744336b737",
+        "failure_termination.py": "36d37d9bc20082eba38bfc5a3586a38c6e1a8b8318bfc0fb32748978736cca01",
+        "history.py": "69c6717b28eed037f6eb7e9a63aa4535150bb9a41ffd4845ef3c1b3d87485bee",
+        "public_artifact_validation_v3.py": "8367a6ae9e78e5e5679c56b79ff3c9c45ebf7e201cc938428db761aeee3947ca",
+        "trace_store_v2.py": "797517f1870fbad3c38ecc871c66472dd46ad48ff1e86660519ec9521b1db2cc",
+        "versioning_v2.py": "6af22a7abe89f238bcb2090b7e04d41493176a5b23a454114b7cfd17f3522a96"
+      },
+      "model_execution": false,
+      "openrouter_call": false,
+      "status": "deterministic_conformance_pass",
+      "suite_sha256": "e33b7e74d5be37ad7c21e29f9910265a2fc068bd58f67540ca2b35f8adbbaf50",
+      "test_count": 7,
+      "tests": [
+        "VALIDATOR_PROVENANCE",
+        "CONTENT_ADDRESSING",
+        "IMMUTABLE_HISTORY",
+        "FAILURE_TERMINATION",
+        "VERSION_EXTENSION",
+        "CLOSURE_VERIFICATION",
+        "TRACE_IMMUTABILITY"
+      ]
+    }
+  },
+  "publication_scope": "Derived evidence lineage only; raw canonical traces are not included in this initial public snapshot.",
+  "schema_version": "1.0"
+}
