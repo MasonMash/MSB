@@ -1552,26 +1552,28 @@ li > p:last-of-type:only-child {
       <h2 id="name-conventions-and-terminology">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-terminology" class="section-name selfRef">Conventions and Terminology</a>
       </h2>
-<p id="section-2-1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2-2">
-        <dt id="section-2-2.1">Public artifact</dt>
-        <dd style="margin-left: 1.5em" id="section-2-2.2">An inspectable protocol object intended to cross the interoperability boundary.<a href="#section-2-2.2" class="pilcrow">¶</a>
+<p id="section-2-1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span>
+        <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">The BCP 14 subseries comprises the requirement-language specifications cited above; see <span>[<a href="#BCP14" class="cite xref">BCP14</a>]</span>.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-3">
+        <dt id="section-2-3.1">Public artifact</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.2">An inspectable protocol object intended to cross the interoperability boundary.<a href="#section-2-3.2" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-2.3">Private model state</dt>
-        <dd style="margin-left: 1.5em" id="section-2-2.4">Implementation-internal material not required for protocol interoperability.<a href="#section-2-2.4" class="pilcrow">¶</a>
+<dt id="section-2-3.3">Private model state</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.4">Implementation-internal material not required for protocol interoperability.<a href="#section-2-3.4" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-2.5">Deliberation</dt>
-        <dd style="margin-left: 1.5em" id="section-2-2.6">A set of public artifacts and references through which claims can be supported, challenged, revised, and decided.<a href="#section-2-2.6" class="pilcrow">¶</a>
+<dt id="section-2-3.5">Deliberation</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.6">A set of public artifacts and references through which claims can be supported, challenged, revised, and decided.<a href="#section-2-3.6" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-2.7">Closure</dt>
-        <dd style="margin-left: 1.5em" id="section-2-2.8">The artifacts transitively reachable through protocol references from a declared decision or tip set.<a href="#section-2-2.8" class="pilcrow">¶</a>
+<dt id="section-2-3.7">Closure</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.8">The artifacts transitively reachable through protocol references from a declared decision or tip set.<a href="#section-2-3.8" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-2-2.9">Blocking objection</dt>
-        <dd style="margin-left: 1.5em" id="section-2-2.10">An objection that prevents a decision from claiming closed status until the objection receives a public disposition.<a href="#section-2-2.10" class="pilcrow">¶</a>
+<dt id="section-2-3.9">Blocking objection</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.10">An objection that prevents a decision from claiming closed status until the objection receives a public disposition.<a href="#section-2-3.10" class="pilcrow">¶</a>
 </dd>
       <dd class="break"></dd>
 </dl>
@@ -1599,27 +1601,39 @@ li > p:last-of-type:only-child {
         A published artifact in version <code>0.1</code> is a JSON object with
         these core members:<a href="#section-4-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-4-2">
-        <dt id="section-4-2.1"><code>protocol_version</code></dt>
+        <dt id="section-4-2.1">
+          <code>protocol_version</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-4-2.2">The protocol profile. The value defined by this document is <code>0.1</code>.<a href="#section-4-2.2" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-4-2.3"><code>artifact_id</code></dt>
+<dt id="section-4-2.3">
+          <code>artifact_id</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-4-2.4">The content-addressed identity defined in <a href="#canonical-profile" class="auto internal xref">Section 11</a>.<a href="#section-4-2.4" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-4-2.5"><code>artifact_type</code></dt>
+<dt id="section-4-2.5">
+          <code>artifact_type</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-4-2.6">One of the seven core types defined in <a href="#artifact-types" class="auto internal xref">Section 5</a>.<a href="#section-4-2.6" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-4-2.7"><code>payload</code></dt>
+<dt id="section-4-2.7">
+          <code>payload</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-4-2.8">Type-specific public data.<a href="#section-4-2.8" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-4-2.9"><code>references</code></dt>
+<dt id="section-4-2.9">
+          <code>references</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-4-2.10">An array of references to prior public artifacts.<a href="#section-4-2.10" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-4-2.11"><code>extensions</code></dt>
+<dt id="section-4-2.11">
+          <code>extensions</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-4-2.12">An optional object containing namespaced extension data.<a href="#section-4-2.12" class="pilcrow">¶</a>
 </dd>
       <dd class="break"></dd>
@@ -1773,19 +1787,27 @@ li > p:last-of-type:only-child {
       </h2>
 <p id="section-6-1">The version <code>0.1</code> provenance classes are:<a href="#section-6-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-6-2">
-        <dt id="section-6-2.1"><code>TRACE_VERIFIED_OBSERVATION</code></dt>
+        <dt id="section-6-2.1">
+          <code>TRACE_VERIFIED_OBSERVATION</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-6-2.2">Evidence supported by an explicitly admitted execution or trace source.<a href="#section-6-2.2" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-6-2.3"><code>EXTERNAL_EVIDENCE</code></dt>
+<dt id="section-6-2.3">
+          <code>EXTERNAL_EVIDENCE</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-6-2.4">Evidence supplied from an explicit external source admitted by the protocol context.<a href="#section-6-2.4" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-6-2.5"><code>MODEL_GENERATED_ANALYSIS</code></dt>
+<dt id="section-6-2.5">
+          <code>MODEL_GENERATED_ANALYSIS</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-6-2.6">A calculation, critique, estimate, simulation, or other analytical product generated by a participant.<a href="#section-6-2.6" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
-<dt id="section-6-2.7"><code>HYPOTHESIS</code></dt>
+<dt id="section-6-2.7">
+          <code>HYPOTHESIS</code>
+        </dt>
         <dd style="margin-left: 1.5em" id="section-6-2.8">A proposition offered for future validation rather than as an observed result.<a href="#section-6-2.8" class="pilcrow">¶</a>
 </dd>
       <dd class="break"></dd>
@@ -2159,6 +2181,10 @@ li > p:last-of-type:only-child {
 <a href="#section-21.1" class="section-number selfRef">21.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="BCP14">[BCP14]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/bcp14">https://www.rfc-editor.org/info/bcp14</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>

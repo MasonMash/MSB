@@ -19,7 +19,7 @@ The RFCXML source and published renderings were validated during stage 5 of 6.
 
 | File | Size | SHA-256 |
 |---|---:|---|
-| `draft-mashayekhi-auditable-model-deliberation-00.txt` | 26749 bytes | `6fa1ef3276e5f913249051efb6e81fc91130652175009dfe30fd62a87e85fc06` |
-| `draft-mashayekhi-auditable-model-deliberation-00.html` | 94367 bytes | `2819ccdedad3bc889ab1c04b02376813657457bb8e77ca9e5c3d1545c489194f` |
+| `draft-mashayekhi-auditable-model-deliberation-00.txt` | 27023 bytes | `a924e71410f9e399e6536e55bba54696930e6c0babe44f16730e0eb051ca8b40` |
+| `draft-mashayekhi-auditable-model-deliberation-00.html` | 95210 bytes | `0002c811814e718ec3ae3147ecaf7fdd22a9201208f546e9b706a09514fda04d` |
 
 Validation does not constitute submission to the IETF Datatracker.
