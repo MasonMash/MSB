@@ -135,13 +135,27 @@ system, privacy, or authorization policy.
 
 ## Typed Deliberation Graph
 
-The proposed model is a directed graph whose nodes are immutable artifacts and
-whose edges carry explicit relations. Revision `-00` requires an acyclic graph
-and preserves concurrent tips.
+The full research model is a typed directed graph whose vocabulary is broader
+than the seven core artifact types in revision `-00`.
 
-Decision quality is not defined as raw majority vote. A decision must expose
-its basis and the disposition of reachable blocking objections. Reliability
-scores, adjudication weights, and decision thresholds remain experimental.
+Candidate nodes include Task, Constraint, Claim, Candidate, Evidence,
+Objection, Rebuttal, Resolution, Risk, Decision, Uncertainty, Failure, and
+Termination.
+
+Candidate relations include `supports`, `contradicts`, `revises`,
+`supersedes`, `resolves`, `depends-on`, `escalates`, `selects`, `invalidates`,
+`considers`, and `decides`.
+
+Only types and relations explicitly defined by revision `-00` are normative.
+
+### Adjudication
+
+Adjudication is graph evaluation, not a neural-network requirement and not raw
+majority voting. A decision exposes its basis and the disposition of reachable
+blocking objections. Local scoring and role policy do not replace closure
+validation and are not standardized by revision `-00`.
+
+See [Protocol Examples](PROTOCOL-EXAMPLES.md).
 
 ## Compact Runtime Grammar
 
@@ -155,17 +169,19 @@ measurable benefit against JSON and natural-language baselines.
 
 ## Conformance Layers
 
-The research program distinguishes possible implementation layers:
+| Research layer | Meaning | Revision `-00` status |
+|---|---|---|
+| L0 | Human-readable structured messages | Informative representation |
+| L1 | Compact textual projection | Experimental and deferred |
+| L2 | JSON artifact and envelope processing | Active specification and test surface |
+| L3 | Binary encoding | Deferred |
+| L4 | Independently verified interoperability | Evidence goal |
 
-- human-readable structured artifacts;
-- compact textual encoding;
-- JSON-compatible envelopes;
-- binary encoding; and
-- independently verified implementations.
+This ladder is not the conformance model of revision `-00`.
 
-Revision `-00` does not standardize an L0-L4 ladder. Conformance claims instead
-identify the exact tested surface: canonical representation, artifact semantic
-validation, or closure verification.
+A current claim must identify the tested surface: canonical representation,
+artifact-semantic validation, or closure verification. L4 cannot be claimed
+without independent cross-implementation evidence.
 
 ## Design Principles
 

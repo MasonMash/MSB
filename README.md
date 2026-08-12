@@ -274,6 +274,8 @@ Current open questions include:
 | [`research/METHODOLOGY.md`](research/METHODOLOGY.md) | Experimental design and evidence policy |
 | [`research/DESIGN-RATIONALE.md`](research/DESIGN-RATIONALE.md) | Informative problem analysis, design choices, and deferred concepts |
 | [`research/EVALUATION-PLAN.md`](research/EVALUATION-PLAN.md) | Predeclared future evaluation methods and evidence boundaries |
+| [`research/RELATED-WORK.md`](research/RELATED-WORK.md) | Protocol positioning and cited research lineage |
+| [`research/PROTOCOL-EXAMPLES.md`](research/PROTOCOL-EXAMPLES.md) | Non-normative message, graph, adjudication, and two-model examples |
 | [`research/EVDRAN-TO-MSB-TRACEABILITY.md`](research/EVDRAN-TO-MSB-TRACEABILITY.md) | Research lineage and disposition of the Evdran paper concepts |
 | [`evidence/manifest.json`](evidence/manifest.json) | Cryptographic evidence lineage |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution and review requirements |

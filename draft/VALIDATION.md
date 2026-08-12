@@ -1,8 +1,8 @@
 # Internet-Draft Validation
 
 The RFCXML source and published renderings were validated during stage 6 of 6
-after reconciliation of the normative artifact contracts, security analysis,
-privacy analysis, and research rationale.
+after reconciliation of the protocol positioning, cited research context,
+non-majority closure explanation, and non-normative protocol examples.
 
 | Check | Result |
 |---|---|
@@ -11,7 +11,7 @@ privacy analysis, and research rationale.
 | TXT rendering | PASS |
 | HTML rendering | PASS |
 | idnits3 process exit code | 0 |
-| idnits3 package source | `github:ietf-tools/idnits` |
+| idnits3 package source |  |
 | idnits3 errors | 0 |
 | idnits3 flaws | 0 |
 | idnits3 warnings | 0 |
@@ -21,8 +21,8 @@ privacy analysis, and research rationale.
 
 | File | Size | SHA-256 |
 |---|---:|---|
-| `draft-mashayekhi-auditable-model-deliberation-00.xml` | 33874 bytes | `5e8874cd11bc4c4a5c67b7a58227fdeb5fe8a5585fd35944eec5be2ef15628b2` |
-| `draft-mashayekhi-auditable-model-deliberation-00.txt` | 28463 bytes | `cc2076b4ab10664c14c121d21ebc8483b011c524bf97fdc0cf16a83780409c80` |
-| `draft-mashayekhi-auditable-model-deliberation-00.html` | 98784 bytes | `cbf2a713447ae14347f67390fcb027e29982889a38dc5a0f02adeefce8053422` |
+|  | 39326 bytes |  |
+|  | 31930 bytes |  |
+|  | 105955 bytes |  |
 
 Validation does not constitute submission to the IETF Datatracker.

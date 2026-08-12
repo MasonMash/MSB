@@ -352,6 +352,13 @@
         decision <bcp14>MUST NOT</bcp14> hide an unresolved blocking objection
         reachable from that closure.
       </t>
+      <t>
+        Majority agreement is neither required nor sufficient for closure.
+        Voting or scoring <bcp14>MAY</bcp14> inform a decision, but
+        <bcp14>MUST NOT</bcp14> hide a reachable unresolved blocking
+        objection. This document does not standardize role reliability,
+        voting weights, or adjudication thresholds.
+      </t>
     </section>
     <section>
       <name>Failure and Recovery</name>
@@ -526,6 +533,33 @@
         knowledge-base output format, signatures, or an authorization
         dialogue. No priority, replacement, compatibility, or endorsement
         claim is made.
+      </t>
+    </section>
+    <section anchor="research-context">
+      <name>Research Context</name>
+      <t>
+        KQML <xref target="KQML" /> and FIPA ACL
+        <xref target="FIPA-ACL" /> established typed communicative acts and
+        explicit agent communication semantics.
+      </t>
+      <t>
+        MCP <xref target="MCP" /> standardizes access to tools, resources,
+        prompts, and context. A2A <xref target="A2A" /> standardizes task and
+        application interoperability. ACP <xref target="ACP" /> is historical
+        lineage that has joined A2A. These complementary layers do not define
+        the artifact and closure semantics in this document.
+      </t>
+      <t>
+        Multi-agent debate <xref target="MAD" /> motivates structured model
+        interaction, while later evaluation <xref target="MAD-EVAL" /> cautions
+        that debate does not consistently outperform simple baselines.
+        Free-MAD <xref target="FREE-MAD" /> challenges majority consensus,
+        CIPHER <xref target="CIPHER" /> explores embedding exchange, and G2CP
+        <xref target="G2CP" /> explores graph-grounded communication.
+      </t>
+      <t>
+        This document claims no priority, replacement, compatibility, or
+        adoption with respect to these systems.
       </t>
     </section>
     <section>
@@ -731,6 +765,36 @@
       </references>
       <references>
         <name>Informative References</name>
+        <reference anchor="KQML" target="https://doi.org/10.1145/191246.191322">
+          <front><title>KQML as an Agent Communication Language</title><author initials="T." surname="Finin" fullname="Tim Finin" /><author initials="R." surname="Fritzson" fullname="Richard Fritzson" /><author initials="D." surname="McKay" fullname="Don McKay" /><author initials="R." surname="McEntire" fullname="Robin McEntire" /><date year="1994" /></front><seriesInfo name="DOI" value="10.1145/191246.191322" />
+        </reference>
+        <reference anchor="FIPA-ACL" target="https://www.fipa.org/specs/fipa00037/">
+          <front><title>FIPA Communicative Act Library Specification</title><author><organization>Foundation for Intelligent Physical Agents</organization></author><date year="2002" /></front><seriesInfo name="FIPA" value="SC00037" />
+        </reference>
+        <reference anchor="MCP" target="https://modelcontextprotocol.io/specification/">
+          <front><title>Model Context Protocol Specification</title><author><organization>Model Context Protocol Project</organization></author><date year="2026" /></front>
+        </reference>
+        <reference anchor="A2A" target="https://a2a-protocol.org/">
+          <front><title>Agent2Agent Protocol</title><author><organization>Agent2Agent Project</organization></author><date year="2026" /></front>
+        </reference>
+        <reference anchor="ACP" target="https://github.com/i-am-bee/acp">
+          <front><title>Agent Communication Protocol</title><author><organization>BeeAI Community</organization></author><date year="2025" /></front>
+        </reference>
+        <reference anchor="MAD" target="https://arxiv.org/abs/2305.14325">
+          <front><title>Improving Factuality and Reasoning in Language Models through Multiagent Debate</title><author initials="Y." surname="Du" fullname="Yilun Du" /><author initials="S." surname="Li" fullname="Shuang Li" /><author initials="A." surname="Torralba" fullname="Antonio Torralba" /><date year="2023" /></front><seriesInfo name="arXiv" value="2305.14325" />
+        </reference>
+        <reference anchor="MAD-EVAL" target="https://arxiv.org/abs/2502.08788">
+          <front><title>If Multi-Agent Debate Is the Answer, What Is the Question?</title><author initials="H." surname="Zhang" fullname="Hangfan Zhang" /><author initials="Z." surname="Cui" fullname="Zhiyao Cui" /><date year="2025" /></front><seriesInfo name="arXiv" value="2502.08788" />
+        </reference>
+        <reference anchor="FREE-MAD" target="https://arxiv.org/abs/2509.11035">
+          <front><title>Free-MAD: Consensus-Free Multi-Agent Debate</title><author initials="Y." surname="Cui" fullname="Yu Cui" /><author initials="H." surname="Fu" fullname="Hang Fu" /><author initials="H." surname="Zhang" fullname="Haibin Zhang" /><date year="2025" /></front><seriesInfo name="arXiv" value="2509.11035" />
+        </reference>
+        <reference anchor="CIPHER" target="https://openreview.net/forum?id=YQ4U7L5z4n">
+          <front><title>Let Models Speak Ciphers: Multiagent Debate through Embeddings</title><author initials="C." surname="Pham" fullname="Chau Pham" /><author initials="B." surname="Liu" fullname="Boyi Liu" /><author initials="Y." surname="Yang" fullname="Yingxiang Yang" /><date year="2024" /></front><seriesInfo name="ICLR" value="2024" />
+        </reference>
+        <reference anchor="G2CP" target="https://arxiv.org/abs/2602.13370">
+          <front><title>G2CP: A Graph-Grounded Communication Protocol for Verifiable and Efficient Multi-Agent Reasoning</title><author initials="K." surname="Ben Khaled" fullname="Karim Ben Khaled" /><author initials="D." surname="Monticolo" fullname="Davy Monticolo" /><date year="2026" /></front><seriesInfo name="arXiv" value="2602.13370" />
+        </reference>
         <reference anchor="RFC3552" target="https://www.rfc-editor.org/info/rfc3552">
           <front>
             <title>Guidelines for Writing RFC Text on Security Considerations</title>
