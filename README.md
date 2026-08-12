@@ -263,6 +263,7 @@ Current open questions include:
 |---|---|
 | [`spec/PROTOCOL-DRAFT-0.1.md`](spec/PROTOCOL-DRAFT-0.1.md) | Experimental protocol research draft |
 | [`spec/CANONICAL-JSON-PROFILE-0.1.md`](spec/CANONICAL-JSON-PROFILE-0.1.md) | Restricted canonical JSON and identifier profile |
+| [`spec/INTERNET-DRAFT-00-DECISIONS.md`](spec/INTERNET-DRAFT-00-DECISIONS.md) | Frozen technical and publication boundaries for the first individual Internet-Draft |
 | [`tools/msb_verify.py`](tools/msb_verify.py) | Reference canonicalization and `artifact_id` tool |
 | [`test-vectors/`](test-vectors/) | Public canonical-profile test inputs |
 | [`research/EVIDENCE_LEDGER.md`](research/EVIDENCE_LEDGER.md) | Deduplicated publication-facing evidence |

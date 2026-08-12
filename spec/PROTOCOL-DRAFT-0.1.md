@@ -295,7 +295,7 @@ The complete serialization, normalization, member-ordering, duplicate-key, norma
 
 This restricted profile is not a claim of compatibility with RFC 8785 JSON Canonicalization Scheme.
 
-Independent positive and negative test vectors are required before the profile is treated as an interoperability result.
+Independent cross-implementation execution of the public positive and negative vectors is required before the profile is treated as an interoperability result.
 
 ## 6. Immutable History
 
