@@ -168,5 +168,7 @@ identifier behavior only. It does not establish conformance with the complete
 MSB protocol, closure verification, provenance policy, extension processing,
 or transport behavior.
 
-Independent positive and negative test vectors are required before this
-profile is treated as an interoperability result.
+The public repository includes four positive and eleven negative test
+vectors. Passing those vectors establishes conformance of the tested
+implementation to this profile; it does not establish independent
+cross-implementation interoperability.

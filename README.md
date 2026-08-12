@@ -150,8 +150,8 @@ The repository's current public implementation surface is intentionally narrower
 | Deterministic canonical serialization | Implemented in `tools/msb_verify.py` | Profile-level behavior |
 | SHA-256-based `artifact_id` calculation | Implemented in `tools/msb_verify.py` | Profile-level behavior |
 | `artifact_id` verification | Implemented in `tools/msb_verify.py` | Profile-level behavior |
-| Positive canonical JSON vectors | Four public input vectors | Initial and incomplete suite |
-| Negative canonical JSON vectors | Not currently present | Required future work |
+| Positive canonical JSON vectors | Four public input/canonical/identifier triplets | All four pass the public profile runner |
+| Negative canonical JSON vectors | Eleven rejection vectors | All eleven pass with the expected error classes |
 | Full seven-semantic protocol verifier | Not currently provided as a public repository tool | Must not be inferred from `msb_verify.py` |
 | Independent implementation | Not yet available | Interoperability remains unproven |
 | Cross-implementation testing | Not yet performed | Required before stronger interoperability claims |
@@ -185,7 +185,7 @@ Historical experimental evidence and the repository's current public implementat
 |---|---|
 | Historical `EXP-003` result | Tested behavior of the prototype used in that experiment |
 | Current `msb_verify.py` | Restricted canonical JSON and identifier implementation |
-| Current public vectors | Four positive canonical JSON inputs |
+| Current public vectors | Four positive and eleven negative canonical-profile vectors |
 | Independent interoperability evidence | Not yet available |
 
 Model-generated quantitative language is not treated as empirical evidence unless the harness actually executed and recorded the claimed measurement.
@@ -267,6 +267,7 @@ Current open questions include:
 | [`test-vectors/`](test-vectors/) | Public canonical-profile test inputs |
 | [`research/EVIDENCE_LEDGER.md`](research/EVIDENCE_LEDGER.md) | Deduplicated publication-facing evidence |
 | [`research/METHODOLOGY.md`](research/METHODOLOGY.md) | Experimental design and evidence policy |
+| [`research/EVDRAN-TO-MSB-TRACEABILITY.md`](research/EVDRAN-TO-MSB-TRACEABILITY.md) | Research lineage and disposition of the Evdran paper concepts |
 | [`evidence/manifest.json`](evidence/manifest.json) | Cryptographic evidence lineage |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution and review requirements |
 | [`CITATION.cff`](CITATION.cff) | Citation metadata |

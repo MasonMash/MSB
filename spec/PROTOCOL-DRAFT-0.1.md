@@ -427,7 +427,9 @@ A conforming implementation of the current research profile MUST demonstrate, at
 
 The EXP-003 prototype currently exercises seven grouped deterministic tests covering these areas.
 
-Passing those tests does not establish interoperability with an independent implementation.
+The public restricted-canonical-JSON suite separately exercises four positive and eleven negative vectors. All fifteen vectors pass the current reference implementation.
+
+Passing either test surface does not establish interoperability with an independent implementation.
 
 ## 14. Security Considerations
 
@@ -500,7 +502,7 @@ Experimental evidence is informative. Protocol requirements are not considered p
 
 Before a standards-track freeze, the project should resolve at least:
 
-1. final canonical serialization;
+1. independent cross-implementation validation of the canonical serialization profile;
 2. artifact author authentication;
 3. signature and verification profiles;
 4. reference-cycle semantics;
