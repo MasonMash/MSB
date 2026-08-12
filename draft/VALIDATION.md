@@ -9,6 +9,8 @@ The RFCXML source and published renderings were validated during stage 5 of 6.
 | TXT rendering | PASS |
 | HTML rendering | PASS |
 | idnits3 errors | 0 |
+| idnits3 process exit code | 0 |
+| idnits3 package source | `github:ietf-tools/idnits` |
 | idnits3 flaws | 0 |
 | idnits3 warnings | 0 |
 | Canonical JSON vectors | 15 PASS, 0 failures |
