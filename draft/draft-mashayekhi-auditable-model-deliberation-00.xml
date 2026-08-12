@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude"
+     category="exp"
+     docName="draft-mashayekhi-auditable-model-deliberation-00"
+     ipr="trust200902"
+     submissionType="IETF"
+     version="3">
+  <front>
+    <title abbrev="Auditable Model Deliberation">Auditable Public Artifacts for Model-Independent Deliberation</title>
+    <seriesInfo name="Internet-Draft" value="draft-mashayekhi-auditable-model-deliberation-00"/>
+    <author fullname="Mohsen Mashayekhi" initials="M." surname="Mashayekhi">
+      <organization>Independent Researcher</organization>
+      <address>
+        <email>mmohsen.m@gmail.com</email>
+        <uri>https://github.com/MasonMash/MSB</uri>
+      </address>
+    </author>
+    <date year="2026" month="August"/>
+    <area>Applications and Real-Time</area>
+    <keyword>artificial intelligence</keyword>
+    <keyword>deliberation</keyword>
+    <keyword>interoperability</keyword>
+    <keyword>auditability</keyword>
+    <keyword>public artifacts</keyword>
+    <abstract>
+      <t>
+        Heterogeneous artificial-intelligence systems can exchange messages
+        without sharing stable semantics for claims, evidence, objections,
+        revisions, decisions, failures, and termination. This document defines
+        an experimental public-artifact protocol for model-independent
+        deliberation. It separates interoperable public state from private
+        model computation and does not require disclosure of chain-of-thought,
+        hidden state, prompts, model weights, or private memory.
+      </t>
+      <t>
+        The document defines seven public artifact types, append-only revision,
+        evidence provenance, blocking-objection closure, explicit failure and
+        termination, a restricted canonical JSON profile, and SHA-256-based
+        artifact identifiers. It does not define transport, signatures,
+        authorization, model execution, or a completed consensus system.
+      </t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section>
+      <name>Introduction</name>
+      <t>
+        Messaging interoperability does not imply deliberation
+        interoperability. A transcript or tool-call sequence does not
+        inherently define what was claimed, what evidence was admitted, what
+        was challenged, what changed, which objections remain unresolved, or
+        whether a final decision is closed over its public record.
+      </t>
+      <t>
+        This document defines a narrow public-artifact layer. An independent
+        reviewer can inspect the public record without accessing private model
+        cognition or provider-internal state.
+      </t>
+
+      <section>
+        <name>Objective</name>
+        <t>
+          The protocol objective is to make a deliberation auditable through
+          immutable, typed, content-addressed public artifacts.
+        </t>
+      </section>
+
+      <section>
+        <name>Scope</name>
+        <t>This document specifies:</t>
+        <ul>
+          <li>core public artifact semantics;</li>
+          <li>an abstract artifact data model;</li>
+          <li>evidence provenance classes;</li>
+          <li>append-only history and revision;</li>
+          <li>reference-graph and decision-closure behavior;</li>
+          <li>explicit failure and termination;</li>
+          <li>version and extension behavior; and</li>
+          <li>a restricted canonical JSON and identifier profile.</li>
+        </ul>
+      </section>
+
+      <section>
+        <name>Non-Goals</name>
+        <t>This document does not standardize:</t>
+        <ul>
+          <li>transport or message delivery;</li>
+          <li>model inference or orchestration;</li>
+          <li>tool execution;</li>
+          <li>prompt construction;</li>
+          <li>model selection;</li>
+          <li>authentication, authorization, or signatures;</li>
+          <li>private reasoning representation; or</li>
+          <li>a fixed number or sequence of deliberation rounds.</li>
+        </ul>
+      </section>
+    </section>
+
+    <section anchor="requirements">
+      <name>Conventions and Terminology</name>
+      <t>
+        The key words <bcp14>MUST</bcp14>, <bcp14>MUST NOT</bcp14>,
+        <bcp14>REQUIRED</bcp14>, <bcp14>SHALL</bcp14>,
+        <bcp14>SHALL NOT</bcp14>, <bcp14>SHOULD</bcp14>,
+        <bcp14>SHOULD NOT</bcp14>, <bcp14>RECOMMENDED</bcp14>,
+        <bcp14>NOT RECOMMENDED</bcp14>, <bcp14>MAY</bcp14>, and
+        <bcp14>OPTIONAL</bcp14> in this document are to be interpreted as
+        described in BCP 14 <xref target="RFC2119"/>
+        <xref target="RFC8174"/> when, and only when, they appear in all
+        capitals, as shown here.
+      </t>
+      <dl>
+        <dt>Public artifact</dt>
+        <dd>An inspectable protocol object intended to cross the interoperability boundary.</dd>
+        <dt>Private model state</dt>
+        <dd>Implementation-internal material not required for protocol interoperability.</dd>
+        <dt>Deliberation</dt>
+        <dd>A set of public artifacts and references through which claims can be supported, challenged, revised, and decided.</dd>
+        <dt>Closure</dt>
+        <dd>The artifacts transitively reachable through protocol references from a declared decision or tip set.</dd>
+        <dt>Blocking objection</dt>
+        <dd>An objection that prevents a decision from claiming closed status until the objection receives a public disposition.</dd>
+      </dl>
+    </section>
+
+    <section>
+      <name>Architectural Invariant</name>
+      <t>
+        A decision <bcp14>MUST</bcp14> be auditable from public artifacts
+        without requiring private model state.
+      </t>
+      <t>
+        An implementation <bcp14>MAY</bcp14> use arbitrary private computation
+        to produce an artifact. It <bcp14>MUST NOT</bcp14> require another
+        participant to disclose private chain-of-thought as a condition of
+        interoperability.
+      </t>
+    </section>
+
+    <section anchor="artifact-model">
+      <name>Abstract Artifact Model</name>
+      <t>
+        A published artifact in version <tt>0.1</tt> is a JSON object with
+        these core members:
+      </t>
+      <dl>
+        <dt><tt>protocol_version</tt></dt>
+        <dd>The protocol profile. The value defined by this document is <tt>0.1</tt>.</dd>
+        <dt><tt>artifact_id</tt></dt>
+        <dd>The content-addressed identity defined in <xref target="canonical-profile"/>.</dd>
+        <dt><tt>artifact_type</tt></dt>
+        <dd>One of the seven core types defined in <xref target="artifact-types"/>.</dd>
+        <dt><tt>payload</tt></dt>
+        <dd>Type-specific public data.</dd>
+        <dt><tt>references</tt></dt>
+        <dd>An array of references to prior public artifacts.</dd>
+        <dt><tt>extensions</tt></dt>
+        <dd>An optional object containing namespaced extension data.</dd>
+      </dl>
+      <t>
+        Additional metadata <bcp14>MUST NOT</bcp14> silently change the
+        semantics of a core member.
+      </t>
+      <t>
+        Transport addresses, provider identifiers, model names, prompts, tool
+        invocation metadata, and private model state are not core members.
+      </t>
+
+      <section>
+        <name>Reference Object</name>
+        <t>
+          Each reference <bcp14>MUST</bcp14> identify a target
+          <tt>artifact_id</tt>. It <bcp14>MAY</bcp14> include one relation
+          from this core vocabulary:
+        </t>
+        <ul>
+          <li><tt>supports</tt>;</li>
+          <li><tt>objects-to</tt>;</li>
+          <li><tt>revises</tt>;</li>
+          <li><tt>supersedes</tt>;</li>
+          <li><tt>considers</tt>; or</li>
+          <li><tt>decides</tt>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <name>Example Shape</name>
+        <artwork type="json"><![CDATA[
+{
+  "protocol_version": "0.1",
+  "artifact_id": "sha256:<64-lowercase-hex>",
+  "artifact_type": "CLAIM",
+  "payload": {
+    "statement": "A public proposition"
+  },
+  "references": [],
+  "extensions": {}
+}
+]]></artwork>
+        <t>
+          The example illustrates the common envelope. It does not assign a
+          valid identifier to the placeholder body.
+        </t>
+      </section>
+    </section>
+
+    <section anchor="artifact-types">
+      <name>Core Artifact Semantics</name>
+
+      <section>
+        <name>CLAIM</name>
+        <t>
+          A <tt>CLAIM</tt> introduces a public proposition that can be
+          supported, challenged, revised, or decided. A claim
+          <bcp14>SHOULD</bcp14> be specific enough for another participant to
+          identify what is contested.
+        </t>
+      </section>
+
+      <section>
+        <name>EVIDENCE</name>
+        <t>
+          An <tt>EVIDENCE</tt> artifact provides public support relevant to
+          one or more claims. It <bcp14>MUST</bcp14> carry one provenance
+          class from <xref target="provenance"/>.
+        </t>
+      </section>
+
+      <section>
+        <name>OBJECTION</name>
+        <t>
+          An <tt>OBJECTION</tt> challenges a claim, evidence item, revision,
+          decision, or protocol assumption. It <bcp14>MAY</bcp14> be marked
+          blocking. A blocking objection <bcp14>MUST</bcp14> receive a public
+          disposition or remain visibly unresolved.
+        </t>
+      </section>
+
+      <section>
+        <name>REVISION</name>
+        <t>
+          A <tt>REVISION</tt> creates a new public position and
+          <bcp14>MUST NOT</bcp14> mutate the artifact it revises. It
+          <bcp14>SHOULD</bcp14> reference the artifacts it modifies or
+          supersedes. A revision <bcp14>MAY</bcp14> reference multiple prior
+          artifacts; this document defines no separate merge type.
+        </t>
+      </section>
+
+      <section>
+        <name>DECISION</name>
+        <t>
+          A <tt>DECISION</tt> records an outcome, its public basis, relevant
+          references, blocking-objection dispositions, and unresolved issues.
+          It <bcp14>MUST NOT</bcp14> claim closure while silently omitting a
+          reachable unresolved blocking objection.
+        </t>
+      </section>
+
+      <section>
+        <name>FAILURE</name>
+        <t>
+          A <tt>FAILURE</tt> records that a requested protocol operation
+          could not complete. Failure classes include malformed artifacts,
+          unsupported versions, unsupported extensions, unavailable
+          references, integrity failures, policy refusals, capability limits,
+          timeouts, and resource limits. A failure
+          <bcp14>MUST NOT</bcp14> be silently converted into success.
+        </t>
+      </section>
+
+      <section>
+        <name>TERMINATION</name>
+        <t>
+          A <tt>TERMINATION</tt> records one terminal state:
+          <tt>completed</tt>, <tt>suspended</tt>, <tt>cancelled</tt>,
+          <tt>deadlock</tt>, or <tt>exhausted</tt>.
+        </t>
+        <t>
+          A completed termination <bcp14>MUST</bcp14> identify a final
+          decision. A deadlock or exhausted termination
+          <bcp14>MUST</bcp14> preserve the relevant unresolved blocking
+          objections.
+        </t>
+      </section>
+    </section>
+
+    <section anchor="provenance">
+      <name>Evidence Provenance</name>
+      <t>The version <tt>0.1</tt> provenance classes are:</t>
+      <dl>
+        <dt><tt>TRACE_VERIFIED_OBSERVATION</tt></dt>
+        <dd>Evidence supported by an explicitly admitted execution or trace source.</dd>
+        <dt><tt>EXTERNAL_EVIDENCE</tt></dt>
+        <dd>Evidence supplied from an explicit external source admitted by the protocol context.</dd>
+        <dt><tt>MODEL_GENERATED_ANALYSIS</tt></dt>
+        <dd>A calculation, critique, estimate, simulation, or other analytical product generated by a participant.</dd>
+        <dt><tt>HYPOTHESIS</tt></dt>
+        <dd>A proposition offered for future validation rather than as an observed result.</dd>
+      </dl>
+      <t>
+        Model-generated quantitative language <bcp14>MUST NOT</bcp14> be
+        represented as independently observed empirical evidence unless it is
+        separately grounded in an admissible source.
+      </t>
+    </section>
+
+    <section>
+      <name>Immutable History</name>
+      <t>
+        An artifact identifier <bcp14>MUST</bcp14> bind to one artifact body.
+        Once accepted into append-only history, the artifact
+        <bcp14>MUST NOT</bcp14> be silently replaced.
+      </t>
+      <t>
+        An identical resubmission <bcp14>MAY</bcp14> be treated as
+        idempotent. A changed body <bcp14>MUST</bcp14> receive a new identity.
+        Corrections <bcp14>MUST</bcp14> be new artifacts with explicit
+        references to prior artifacts.
+      </t>
+    </section>
+
+    <section anchor="closure">
+      <name>Reference Graph and Decision Closure</name>
+      <t>
+        Version <tt>0.1</tt> uses a directed acyclic public artifact graph.
+        A closure verifier <bcp14>MUST</bcp14> reject a reference cycle.
+      </t>
+      <t>
+        Multiple concurrent tips are permitted. A required unavailable
+        reference causes closure verification to fail. An implementation
+        <bcp14>MUST NOT</bcp14> construct a successful partial closure when a
+        required artifact is unavailable.
+      </t>
+      <t>
+        A decision declares its audited closure through references. A final
+        decision <bcp14>MUST NOT</bcp14> hide an unresolved blocking objection
+        reachable from that closure.
+      </t>
+    </section>
+
+    <section>
+      <name>Failure and Recovery</name>
+      <t>
+        Protocol failure and transport failure are distinct. If processing
+        cannot continue, an implementation must expose an explicit failure
+        outcome rather than silently truncating the record.
+      </t>
+      <t>
+        A retry <bcp14>MUST NOT</bcp14> erase a canonical failure that belongs
+        to the auditable record.
+      </t>
+    </section>
+
+    <section>
+      <name>Versioning and Extensions</name>
+      <t>
+        An implementation <bcp14>MUST</bcp14> reject an unsupported major
+        version and <bcp14>MUST NOT</bcp14> infer minor-version compatibility.
+        A different minor version <bcp14>MAY</bcp14> be accepted only under an
+        explicit compatibility rule.
+      </t>
+      <t>
+        Extension data <bcp14>MUST</bcp14> remain separate from core members.
+        Unknown extensions <bcp14>MUST NOT</bcp14> change core semantics.
+        This document defines no critical-extension mechanism and requests no
+        extension registry.
+      </t>
+    </section>
+
+    <section anchor="canonical-profile">
+      <name>Restricted Canonical JSON and Artifact Identity</name>
+      <t>
+        JSON processing follows <xref target="RFC8259"/> subject to the
+        additional restrictions in this section. Text is UTF-8 as specified
+        by <xref target="RFC3629"/>.
+      </t>
+
+      <section>
+        <name>Admitted Values</name>
+        <t>
+          An admitted value is null, a Boolean, a Unicode string, an integer,
+          an array of admitted values, or an object with string member names
+          and admitted values.
+        </t>
+        <t>
+          Floating-point values, decimal fractions, exponents, non-finite
+          numbers, comments, binary values, and implementation-specific JSON
+          extensions are not admitted. Integers are restricted to the
+          inclusive range -9007199254740991 through 9007199254740991.
+        </t>
+        <t>
+          An artifact submitted for identifier calculation
+          <bcp14>MUST</bcp14> be a top-level object.
+        </t>
+      </section>
+
+      <section>
+        <name>Input Rejection</name>
+        <t>An implementation <bcp14>MUST</bcp14> reject:</t>
+        <ul>
+          <li>malformed JSON;</li>
+          <li>a UTF-8 byte-order mark;</li>
+          <li>invalid UTF-8;</li>
+          <li>duplicate object member names;</li>
+          <li>unpaired surrogate code points;</li>
+          <li>integers outside the admitted range;</li>
+          <li>normalization collisions; and</li>
+          <li>values outside the admitted domain.</li>
+        </ul>
+      </section>
+
+      <section>
+        <name>Unicode Normalization and Member Ordering</name>
+        <t>
+          Every string and member name <bcp14>MUST</bcp14> be normalized to
+          Unicode Normalization Form C as defined by
+          <xref target="UNICODE-NORMALIZATION"/>.
+        </t>
+        <t>
+          If distinct input member names become identical after normalization,
+          the object <bcp14>MUST</bcp14> be rejected.
+        </t>
+        <t>
+          Object members <bcp14>MUST</bcp14> be sorted by ascending unsigned
+          bytes of the normalized, unescaped member name encoded as UTF-8.
+        </t>
+      </section>
+
+      <section>
+        <name>Serialization</name>
+        <t>
+          Quotation mark, reverse solidus, backspace, form feed, line feed,
+          carriage return, and horizontal tab use their short JSON escapes.
+          Other control characters U+0000 through U+001F use lowercase
+          <tt>\u00xx</tt> form. Other Unicode scalar values are emitted
+          directly as UTF-8. Solidus is not escaped.
+        </t>
+        <t>
+          Integers use base-10 with no plus sign, leading zero, or exponent.
+          Arrays retain order. Commas and colons have no surrounding
+          whitespace. The result has no byte-order mark and no trailing
+          newline.
+        </t>
+      </section>
+
+      <section>
+        <name>Identifier Calculation</name>
+        <ol>
+          <li>Validate the complete artifact.</li>
+          <li>Create a logical copy of the top-level object.</li>
+          <li>Remove exactly the top-level <tt>artifact_id</tt> member if present.</li>
+          <li>Serialize the remaining object under this profile.</li>
+          <li>Calculate SHA-256 as defined by <xref target="RFC6234"/> over the exact bytes.</li>
+          <li>Encode <tt>sha256:</tt> followed by 64 lowercase hexadecimal digits.</li>
+        </ol>
+        <t>
+          A nested member named <tt>artifact_id</tt>
+          <bcp14>MUST NOT</bcp14> be removed.
+        </t>
+      </section>
+
+      <section>
+        <name>Identifier Verification</name>
+        <t>
+          The submitted artifact <bcp14>MUST</bcp14> contain one top-level
+          <tt>artifact_id</tt> whose value matches
+          <tt>sha256:[0-9a-f]{64}</tt>. A verifier
+          <bcp14>MUST</bcp14> independently calculate and compare the complete
+          identifier. A mismatch is an integrity failure.
+        </t>
+      </section>
+
+      <section>
+        <name>Profile Boundary</name>
+        <t>
+          This restricted profile does not claim conformance with the JSON
+          Canonicalization Scheme in <xref target="RFC8785"/>.
+        </t>
+        <t>
+          The public repository contains four positive and eleven negative
+          vectors. Passing those vectors establishes tested profile behavior
+          for one implementation, not independent interoperability.
+        </t>
+      </section>
+    </section>
+
+    <section>
+      <name>Conformance</name>
+      <t>A conformance claim <bcp14>MUST</bcp14> identify one or more targets:</t>
+      <ol>
+        <li>canonical JSON and identifier conformance;</li>
+        <li>artifact-semantic validation conformance; or</li>
+        <li>closure-verification conformance.</li>
+      </ol>
+      <t>
+        Canonical-profile conformance <bcp14>MUST NOT</bcp14> be presented as
+        complete protocol conformance. Independent cross-implementation
+        interoperability is an evidence goal, not a prerequisite for
+        publication of this experimental revision.
+      </t>
+    </section>
+
+    <section>
+      <name>Related Work and Protocol Boundaries</name>
+      <t>
+        KQML and FIPA-ACL historically separated communicative acts from
+        content and ontology. Contemporary systems such as MCP, A2A, and ACP
+        address tool, context, application, or agent communication layers.
+        This document addresses the narrower semantics of public deliberation
+        artifacts.
+      </t>
+      <t>
+        <xref target="I-D.farley-acta-knowledge-units"/> defines Knowledge
+        Units produced by a particular multi-model process.
+        <xref target="I-D.farley-acta-signed-receipts"/> defines signed
+        receipts. <xref target="I-D.ovidi-lip-4d"/> addresses intent context
+        and authorization dialogue. <xref target="I-D.c4tz-marc"/> addresses
+        control and uncertainty disclosure.
+      </t>
+      <t>
+        This document does not prescribe a fixed round sequence, a
+        knowledge-base output format, signatures, or an authorization
+        dialogue. No priority, replacement, compatibility, or endorsement
+        claim is made.
+      </t>
+    </section>
+
+    <section>
+      <name>Experimental Evidence and Limitations</name>
+      <t>
+        The design was informed by a completed twelve-round heterogeneous
+        relay, a fail-closed full-history stress attempt, and targeted
+        deterministic prototype tests.
+      </t>
+      <t>
+        The completed relay used single-hop direct context. The stress attempt
+        stopped at Round 2. The deterministic tests did not use paid model
+        execution. The public fifteen-vector suite tests one reference
+        implementation.
+      </t>
+      <t>
+        This evidence does not prove efficiency, accuracy, scale, adversarial
+        security, privacy safety, universal compatibility, or independent
+        interoperability.
+      </t>
+    </section>
+
+    <section>
+      <name>Operational Considerations</name>
+      <t>Implementations should define limits for:</t>
+      <ul>
+        <li>artifact size;</li>
+        <li>graph depth;</li>
+        <li>closure size;</li>
+        <li>reference fan-out;</li>
+        <li>retry behavior; and</li>
+        <li>resource consumption.</li>
+      </ul>
+      <t>
+        A limit-induced failure <bcp14>SHOULD</bcp14> be explicit rather than
+        appearing as successful truncation.
+      </t>
+    </section>
+
+    <section anchor="security">
+      <name>Security Considerations</name>
+      <t>
+        Implementations must consider artifact forgery, author impersonation,
+        replay, equivocation, malicious references, provenance spoofing,
+        prompt injection carried as evidence, evidence poisoning, role
+        hijacking, denial of service through unbounded graphs, adversarial
+        extensions, omitted artifacts, and false closure.
+      </t>
+      <t>
+        Content addressing detects changes to artifact content. It does not
+        authenticate an author, authorize an action, prove model identity, or
+        establish evidence trustworthiness. Authentication, signatures, key
+        discovery, authorization, and non-repudiation are outside this
+        revision.
+      </t>
+      <t>
+        Untrusted evidence must be processed as data rather than as authority
+        to modify system instructions, role policy, privacy policy, or
+        authorization state.
+      </t>
+    </section>
+
+    <section anchor="privacy">
+      <name>Privacy Considerations</name>
+      <t>
+        A conforming implementation <bcp14>MUST NOT</bcp14> require disclosure
+        of private chain-of-thought or private model state for interoperability.
+      </t>
+      <t>
+        Public artifacts can contain sensitive information even when they
+        contain no chain-of-thought. Implementations must apply applicable
+        disclosure, minimization, authorization, and retention policies before
+        publication or forwarding.
+      </t>
+      <t>
+        This revision defines no wire-level privacy classification labels.
+      </t>
+    </section>
+
+    <section>
+      <name>IANA Considerations</name>
+      <t>This document requests no IANA actions.</t>
+    </section>
+
+    <section>
+      <name>Future Work</name>
+      <t>Work deferred beyond revision <tt>-00</tt> includes:</t>
+      <ul>
+        <li>authentication and signature profiles;</li>
+        <li>transport bindings and media types;</li>
+        <li>extension registries;</li>
+        <li>bounded-history checkpoints;</li>
+        <li>binary encodings;</li>
+        <li>compact wire grammars;</li>
+        <li>privacy-class labels;</li>
+        <li>independent implementations; and</li>
+        <li>cross-implementation testing.</li>
+      </ul>
+    </section>
+
+    <section>
+      <name>Acknowledgements</name>
+      <t>
+        This document derives from an experimental research program on
+        heterogeneous model deliberation and from public review of the MSB
+        research repository. The author thanks reviewers who identify
+        ambiguities, unsupported claims, privacy risks, and interoperability
+        failures.
+      </t>
+    </section>
+  </middle>
+
+  <back>
+    <references>
+      <name>Normative References</name>
+
+      <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119">
+        <front>
+          <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+          <author initials="S." surname="Bradner" fullname="Scott Bradner"/>
+          <date month="March" year="1997"/>
+        </front>
+        <seriesInfo name="BCP" value="14"/>
+        <seriesInfo name="RFC" value="2119"/>
+        <seriesInfo name="DOI" value="10.17487/RFC2119"/>
+      </reference>
+
+      <reference anchor="RFC8174" target="https://www.rfc-editor.org/info/rfc8174">
+        <front>
+          <title>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</title>
+          <author initials="B." surname="Leiba" fullname="Barry Leiba"/>
+          <date month="May" year="2017"/>
+        </front>
+        <seriesInfo name="BCP" value="14"/>
+        <seriesInfo name="RFC" value="8174"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8174"/>
+      </reference>
+
+      <reference anchor="RFC8259" target="https://www.rfc-editor.org/info/rfc8259">
+        <front>
+          <title>The JavaScript Object Notation (JSON) Data Interchange Format</title>
+          <author initials="T." surname="Bray" fullname="Tim Bray"/>
+          <date month="December" year="2017"/>
+        </front>
+        <seriesInfo name="STD" value="90"/>
+        <seriesInfo name="RFC" value="8259"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8259"/>
+      </reference>
+
+      <reference anchor="RFC3629" target="https://www.rfc-editor.org/info/rfc3629">
+        <front>
+          <title>UTF-8, a transformation format of ISO 10646</title>
+          <author initials="F." surname="Yergeau" fullname="Francois Yergeau"/>
+          <date month="November" year="2003"/>
+        </front>
+        <seriesInfo name="STD" value="63"/>
+        <seriesInfo name="RFC" value="3629"/>
+        <seriesInfo name="DOI" value="10.17487/RFC3629"/>
+      </reference>
+
+      <reference anchor="RFC6234" target="https://www.rfc-editor.org/info/rfc6234">
+        <front>
+          <title>US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)</title>
+          <author initials="D." surname="Eastlake" fullname="Donald Eastlake"/>
+          <author initials="T." surname="Hansen" fullname="Tony Hansen"/>
+          <date month="May" year="2011"/>
+        </front>
+        <seriesInfo name="RFC" value="6234"/>
+        <seriesInfo name="DOI" value="10.17487/RFC6234"/>
+      </reference>
+
+      <reference anchor="UNICODE-NORMALIZATION" target="https://www.unicode.org/reports/tr15/">
+        <front>
+          <title>Unicode Normalization Forms</title>
+          <author>
+            <organization>Unicode Consortium</organization>
+          </author>
+          <date year="2026"/>
+        </front>
+        <seriesInfo name="Unicode Standard Annex" value="15"/>
+      </reference>
+    </references>
+
+    <references>
+      <name>Informative References</name>
+
+      <reference anchor="RFC8785" target="https://www.rfc-editor.org/info/rfc8785">
+        <front>
+          <title>JSON Canonicalization Scheme (JCS)</title>
+          <author initials="A." surname="Rundgren" fullname="Anders Rundgren"/>
+          <author initials="B." surname="Jordan" fullname="Bradley Jordan"/>
+          <author initials="S." surname="Erdtman" fullname="Samuel Erdtman"/>
+          <date month="June" year="2020"/>
+        </front>
+        <seriesInfo name="RFC" value="8785"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8785"/>
+      </reference>
+
+      <reference anchor="I-D.farley-acta-knowledge-units"
+                 target="https://datatracker.ietf.org/doc/draft-farley-acta-knowledge-units/">
+        <front>
+          <title>Knowledge Units for Multi-Model Deliberation</title>
+          <author initials="T." surname="Farley" fullname="Thomas Farley"/>
+          <date month="April" year="2026"/>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-farley-acta-knowledge-units-00"/>
+      </reference>
+
+      <reference anchor="I-D.farley-acta-signed-receipts"
+                 target="https://datatracker.ietf.org/doc/draft-farley-acta-signed-receipts/">
+        <front>
+          <title>Signed Decision Receipts for Machine-to-Machine Access Control</title>
+          <author initials="T." surname="Farley" fullname="Thomas Farley"/>
+          <date year="2026"/>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-farley-acta-signed-receipts"/>
+      </reference>
+
+      <reference anchor="I-D.ovidi-lip-4d"
+                 target="https://datatracker.ietf.org/doc/draft-ovidi-lip-4d/">
+        <front>
+          <title>LIP-4D: An Intent Context and Authorization Protocol for AI Agents</title>
+          <author initials="O." surname="Ovidi" fullname="Ovidi"/>
+          <date month="July" year="2026"/>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-ovidi-lip-4d-00"/>
+      </reference>
+
+      <reference anchor="I-D.c4tz-marc"
+                 target="https://datatracker.ietf.org/doc/draft-c4tz-marc/">
+        <front>
+          <title>MARC: A Control and Uncertainty Disclosure Profile for Generative Models and Agents</title>
+          <author initials="C." surname="c4tz" fullname="c4tz"/>
+          <date month="May" year="2026"/>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-c4tz-marc-02"/>
+      </reference>
+    </references>
+  </back>
+</rfc>
