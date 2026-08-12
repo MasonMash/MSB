@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this research or protocol draft, please cite the repository."
-title: "MSB: Model-Independent Structured Deliberation Protocol"
+title: "Model Study Bridge (MSB): Auditable Public Artifacts for Model-Independent Deliberation"
 type: software
 authors:
   - family-names: "Mashayekhi"
@@ -9,3 +9,18 @@ version: "0.1"
 date-released: "2026-08-11"
 repository-code: "https://github.com/MasonMash/MSB"
 license: "Apache-2.0"
+keywords:
+  - "artificial intelligence"
+  - "multi-agent systems"
+  - "agent interoperability"
+  - "auditable deliberation"
+  - "public artifacts"
+  - "provenance"
+  - "canonical JSON"
+  - "Internet-Draft"
+abstract: >-
+  Model Study Bridge (MSB) is an experimental protocol research project for
+  interoperable and auditable deliberation between heterogeneous AI models.
+  It studies typed public artifacts, explicit evidence provenance, immutable
+  history, privacy boundaries, and verifiable decision closure without
+  requiring disclosure of private chain-of-thought.

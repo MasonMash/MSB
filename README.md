@@ -1,6 +1,6 @@
-# MSB
+# Model Study Bridge (MSB)
 
-**A research project for interoperable, auditable deliberation between heterogeneous AI models.**
+**An experimental protocol research project for interoperable, auditable deliberation between heterogeneous AI models.**
 
 MSB studies the minimum public record that heterogeneous AI systems may need in order to inspect, challenge, revise, and audit one another's contributions without exposing private reasoning.
 

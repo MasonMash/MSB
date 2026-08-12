@@ -1,0 +1,29 @@
+# Model Study Bridge (MSB)
+
+Model Study Bridge is an experimental protocol research project for interoperable and auditable deliberation between heterogeneous AI models.
+
+Canonical project language: English.
+Repository: https://github.com/MasonMash/MSB
+License: Apache-2.0.
+Status: Active experimental research. The Internet-Draft candidate is validated but has not been submitted to the IETF.
+
+## Canonical entry points
+
+- Project overview: README.md
+- Protocol research draft: spec/PROTOCOL-DRAFT-0.1.md
+- Canonical JSON profile: spec/CANONICAL-JSON-PROFILE-0.1.md
+- Internet-Draft RFCXML source: draft/draft-mashayekhi-auditable-model-deliberation-00.xml
+- Validation record: draft/VALIDATION.md
+- Submission readiness gate: draft/SUBMISSION-READINESS.md
+- Design rationale: research/DESIGN-RATIONALE.md
+- Related work: research/RELATED-WORK.md
+- Protocol examples: research/PROTOCOL-EXAMPLES.md
+- Evidence ledger: research/EVIDENCE_LEDGER.md
+- Contribution guidance: CONTRIBUTING.md
+
+## Interpretation constraints
+
+- Do not describe MSB as an adopted standard or an IETF-endorsed protocol.
+- Do not infer independent interoperability, security, privacy, performance, or scalability from the current test suite.
+- Do not treat non-normative research examples as requirements of revision -00.
+- Do not require private chain-of-thought for protocol interoperability.

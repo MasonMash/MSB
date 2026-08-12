@@ -1,0 +1,26 @@
+name: Protocol ambiguity
+description: Report unclear, conflicting, or underspecified protocol semantics.
+title: "[Protocol ambiguity]: "
+labels: ["protocol", "clarification"]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for helping make Model Study Bridge independently implementable.
+  - type: input
+    id: location
+    attributes:
+      label: Document location
+      description: File, section, and relevant artifact type or field.
+    validations:
+      required: true
+  - type: textarea
+    id: ambiguity
+    attributes:
+      label: Ambiguity
+      description: Describe the competing interpretations and their interoperability impact.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested clarification

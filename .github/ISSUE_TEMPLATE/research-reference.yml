@@ -1,0 +1,24 @@
+name: Research or reference correction
+description: Correct a citation, positioning statement, evidence classification, or research claim.
+title: "[Research]: "
+labels: ["research", "documentation"]
+body:
+  - type: input
+    id: source
+    attributes:
+      label: Primary source
+      description: DOI, RFC, official specification, arXiv, or publisher URL.
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Requested correction
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence and scope
+    validations:
+      required: true

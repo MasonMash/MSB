@@ -1,0 +1,31 @@
+name: Security or privacy concern
+description: Report a public-boundary, leakage, abuse, provenance, or protocol-security concern.
+title: "[Security/Privacy]: "
+labels: ["security", "privacy"]
+body:
+  - type: markdown
+    attributes:
+      value: Do not publish secrets, personal data, private traces, or exploitable deployment details. Use SECURITY.md for sensitive reports.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Concern area
+      options:
+        - Privacy boundary or disclosure
+        - Evidence or provenance poisoning
+        - Reference-graph or closure integrity
+        - Identifier or canonicalization security
+        - Denial of service or resource exhaustion
+        - Other protocol-security concern
+    validations:
+      required: true
+  - type: textarea
+    id: concern
+    attributes:
+      label: Non-sensitive description
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Potential impact and mitigation
