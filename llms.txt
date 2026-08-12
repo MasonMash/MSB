@@ -5,16 +5,17 @@ Model Study Bridge is an experimental protocol research project for interoperabl
 Canonical project language: English.
 Repository: https://github.com/MasonMash/MSB
 License: Apache-2.0.
-Status: Active experimental research. The Internet-Draft candidate is validated but has not been submitted to the IETF.
+Status: Active experimental research. Revision -00 is published as an active individual Internet-Draft; it is not IETF-endorsed and has no standards status.
 
 ## Canonical entry points
 
 - Project overview: README.md
 - Protocol research draft: spec/PROTOCOL-DRAFT-0.1.md
 - Canonical JSON profile: spec/CANONICAL-JSON-PROFILE-0.1.md
+- Published Internet-Draft: https://datatracker.ietf.org/doc/draft-mashayekhi-auditable-model-deliberation/
 - Internet-Draft RFCXML source: draft/draft-mashayekhi-auditable-model-deliberation-00.xml
 - Validation record: draft/VALIDATION.md
-- Submission readiness gate: draft/SUBMISSION-READINESS.md
+- Historical submission-readiness record: draft/SUBMISSION-READINESS.md
 - Design rationale: research/DESIGN-RATIONALE.md
 - Related work: research/RELATED-WORK.md
 - Protocol examples: research/PROTOCOL-EXAMPLES.md

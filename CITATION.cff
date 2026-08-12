@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this research or protocol draft, please cite the repository."
+message: "If you use this research or protocol draft, please cite the repository and the published Internet-Draft as appropriate."
 title: "Model Study Bridge (MSB): Auditable Public Artifacts for Model-Independent Deliberation"
 type: software
 authors:
@@ -8,6 +8,7 @@ authors:
 version: "0.1"
 date-released: "2026-08-11"
 repository-code: "https://github.com/MasonMash/MSB"
+url: "https://datatracker.ietf.org/doc/draft-mashayekhi-auditable-model-deliberation/"
 license: "Apache-2.0"
 keywords:
   - "artificial intelligence"

@@ -4,7 +4,9 @@
 
 MSB studies the minimum public record that heterogeneous AI systems may need in order to inspect, challenge, revise, and audit one another's contributions without exposing private reasoning.
 
-The project is a research and experimental environment. It is not an adopted standard, an IETF publication, or a claim that the current artifact model is final.
+The first individual Internet-Draft derived from this research, [Auditable Public Artifacts for Model-Independent Deliberation](https://datatracker.ietf.org/doc/draft-mashayekhi-auditable-model-deliberation/), is published as revision `-00`.
+
+MSB remains a research and experimental project. Publication of an individual Internet-Draft does not make MSB an adopted standard, indicate IETF endorsement or consensus, or establish that the current artifact model is final.
 
 ## What MSB Is
 
@@ -16,7 +18,7 @@ The project currently has three distinct layers:
 |---|---|---|
 | MSB | The research project and public repository | Active research |
 | Current research profile | Candidate artifact semantics and technical contracts used to test the research thesis | Experimental |
-| Individual Internet-Draft candidate | Independently named experimental interoperability specification derived from the research profile | Authored and validated; not submitted |
+| Published individual Internet-Draft | Independently named experimental interoperability specification derived from the research profile | Active revision `-00`; individual submission |
 
 Keeping these layers separate prevents experimental design choices from being mistaken for settled standards requirements.
 
@@ -222,9 +224,9 @@ The project's next controlled objective is to complete and internally reconcile 
 - security and privacy analysis; and
 - contribution and review guidance.
 
-The project has authored and locally validated an independently named Internet-Draft `-00` candidate. It has not been submitted to the IETF Datatracker.
+The project has published [revision `-00` of an independently named individual Internet-Draft](https://datatracker.ietf.org/doc/draft-mashayekhi-auditable-model-deliberation/) in the IETF Datatracker.
 
-Publication of an Internet-Draft would begin public standards discussion. It would not imply IETF endorsement, adoption, consensus, or standards status.
+Publication makes the document available for public standards discussion. It does not imply IETF endorsement, Working Group adoption, consensus, or standards status.
 
 Progress toward that draft is evidence-gated:
 
@@ -237,7 +239,7 @@ Progress toward that draft is evidence-gated:
 | Security and privacy review | Threats, leakage boundaries, abuse cases, and mitigations are documented |
 | Naming review | Repository naming history and current protocol-name conflicts are reviewed before draft naming |
 | Draft preparation | Scope and normative requirements are supported by available evidence |
-| Submission | An independently named Internet-Draft `-00` is authored and published by the project |
+| Submission | Revision `-00` is published as an active individual Internet-Draft |
 
 The candidate document name and revision `-00` vocabulary are fixed for submission review. Final protocol naming, later conformance structure, and any standards path remain open.
 
@@ -264,9 +266,10 @@ Current open questions include:
 | [`spec/PROTOCOL-DRAFT-0.1.md`](spec/PROTOCOL-DRAFT-0.1.md) | Experimental protocol research draft |
 | [`spec/CANONICAL-JSON-PROFILE-0.1.md`](spec/CANONICAL-JSON-PROFILE-0.1.md) | Restricted canonical JSON and identifier profile |
 | [`spec/INTERNET-DRAFT-00-DECISIONS.md`](spec/INTERNET-DRAFT-00-DECISIONS.md) | Frozen technical and publication boundaries for the first individual Internet-Draft |
-| [`draft/draft-mashayekhi-auditable-model-deliberation-00.xml`](draft/draft-mashayekhi-auditable-model-deliberation-00.xml) | RFCXML v3 source for the first individual Internet-Draft |
+| [Published individual Internet-Draft](https://datatracker.ietf.org/doc/draft-mashayekhi-auditable-model-deliberation/) | Active Datatracker record for revision `-00` |
+| [`draft/draft-mashayekhi-auditable-model-deliberation-00.xml`](draft/draft-mashayekhi-auditable-model-deliberation-00.xml) | RFCXML v3 source for the published revision `-00` |
 | [`draft/VALIDATION.md`](draft/VALIDATION.md) | Reproducible render and submission-readiness validation record |
-| [`draft/SUBMISSION-READINESS.md`](draft/SUBMISSION-READINESS.md) | Final pre-submission evidence and authorization gate |
+| [`draft/SUBMISSION-READINESS.md`](draft/SUBMISSION-READINESS.md) | Historical pre-submission evidence and authorization record |
 | [`draft/SUBMISSION-CHECKSUMS.sha256`](draft/SUBMISSION-CHECKSUMS.sha256) | Integrity manifest for the submission artifacts |
 | [`tools/msb_verify.py`](tools/msb_verify.py) | Reference canonicalization and `artifact_id` tool |
 | [`test-vectors/`](test-vectors/) | Public canonical-profile test inputs |

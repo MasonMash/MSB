@@ -4,6 +4,9 @@
   "name": "Model Study Bridge (MSB)",
   "description": "Experimental protocol research for interoperable and auditable deliberation between heterogeneous AI models using typed public artifacts, provenance, immutable history, privacy boundaries, and verifiable decision closure.",
   "codeRepository": "https://github.com/MasonMash/MSB",
+  "relatedLink": [
+    "https://datatracker.ietf.org/doc/draft-mashayekhi-auditable-model-deliberation/"
+  ],
   "license": "https://spdx.org/licenses/Apache-2.0",
   "version": "0.1",
   "datePublished": "2026-08-11",
