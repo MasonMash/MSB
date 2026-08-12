@@ -11,53 +11,75 @@
 | Author email | `mmohsen.m@gmail.com` |
 | Source format | Standalone RFCXML v3 |
 | Document date | 2026-08-12 |
-| Repository baseline | `a88782c022a8df033cd01986518a652c2885f6ff` |
+| Reconciled content baseline | `8ce2fb96228453a347ae8fd1559a9d4e18044ce3` |
 
 ## Submission artifacts
 
 | Artifact | SHA-256 |
 |---|---|
-| `draft/draft-mashayekhi-auditable-model-deliberation-00.xml` | `088ea3a4f57864b34404572bc6a8f3a219f8b4edb385a7a75b5566cf3996448f` |
-| `draft/draft-mashayekhi-auditable-model-deliberation-00.txt` | `a924e71410f9e399e6536e55bba54696930e6c0babe44f16730e0eb051ca8b40` |
-| `draft/draft-mashayekhi-auditable-model-deliberation-00.html` | `0002c811814e718ec3ae3147ecaf7fdd22a9201208f546e9b706a09514fda04d` |
-| `draft/VALIDATION.md` | `571f4bf770d7d1b6097947d4f882ef9277879871a17c035d5473c5a790d7d17d` |
+| `draft/draft-mashayekhi-auditable-model-deliberation-00.xml` | `5e8874cd11bc4c4a5c67b7a58227fdeb5fe8a5585fd35944eec5be2ef15628b2` |
+| `draft/draft-mashayekhi-auditable-model-deliberation-00.txt` | `cc2076b4ab10664c14c121d21ebc8483b011c524bf97fdc0cf16a83780409c80` |
+| `draft/draft-mashayekhi-auditable-model-deliberation-00.html` | `cbf2a713447ae14347f67390fcb027e29982889a38dc5a0f02adeefce8053422` |
+| `draft/VALIDATION.md` | `42f0863724b0d9179f14ddeae4dd6236bd93796506c10d9780de7b298e0a5dc6` |
 
-The authoritative submission source is
-`draft/draft-mashayekhi-auditable-model-deliberation-00.xml`. The plaintext and HTML files are reproducible renderings of that
-source.
+The authoritative submission source is `draft/draft-mashayekhi-auditable-model-deliberation-00.xml`. The plaintext and HTML files
+are reproducible renderings of that source.
+
+## Reconciliation completed
+
+Before this readiness record was generated:
+
+- minimum payload contracts were defined for all seven core artifact types;
+- the meaning of a public artifact was limited to the authorized
+  interoperability boundary;
+- security actors, assets, trust boundaries, threats, and mitigations were
+  documented;
+- privacy minimization, authorized recipients, linkability, retention,
+  secondary use, identifiers, logs, and disclosure were addressed;
+- the research design rationale and evaluation plan were published separately;
+- compact encodings, role policy, privacy wire labels, and conformance ladders
+  remained deferred rather than becoming silent normative requirements; and
+- the README status and submission-package links were reconciled.
 
 ## Validation evidence
 
-- RFCXML parsing and standalone-source checks pass.
-- `xml2rfc 3.34.0` renders both plaintext and HTML successfully.
-- `idnits 3.0.0` reports no errors, flaws, warnings, or nits.
+- RFCXML parsing and structural checks pass.
+- `xml2rfc 3.34.0` renders plaintext and HTML successfully.
+- A real execution of `idnits` reports no errors, flaws, or warnings.
 - All fifteen canonical JSON conformance vectors pass.
-- Published rendering hashes match `draft/VALIDATION.md`.
-- GitHub API verification matches the local source and renderings byte for
-  byte.
-- The Datatracker submission page is available.
-- No public Datatracker record was found for the candidate document name at
-  inspection time.
+- Submission checksums match the current artifacts.
+- No IETF submission or Datatracker mutation occurred.
+
+## Remaining evidence limitations
+
+Publication of revision `-00` does not establish:
+
+- independent cross-implementation interoperability;
+- benchmarked token reduction;
+- decision-accuracy improvement;
+- adversarial security;
+- privacy safety across deployments;
+- scalability; or
+- IETF adoption or consensus.
+
+These claims require the experiments described in
+[`research/EVALUATION-PLAN.md`](../research/EVALUATION-PLAN.md).
 
 ## Submission procedure
 
-1. Reconfirm that the repository HEAD and GitHub `main` identify this
-   readiness record and its artifact hashes.
-2. Reconfirm the author metadata and intended Experimental status.
-3. Review the IETF Note Well and BCP 78 obligations.
-4. Obtain the author's explicit final authorization to submit.
+1. Reconfirm GitHub `main`, this readiness record, and the artifact hashes.
+2. Reconfirm author metadata and Experimental intended status.
+3. Review the IETF Note Well and applicable IETF Trust obligations.
+4. Obtain explicit final authorization from the author.
 5. Upload the standalone RFCXML source to the IETF Datatracker.
 6. Review the Datatracker-generated rendering and metadata.
-7. Complete any email or Datatracker confirmation required for posting.
+7. Complete required author confirmation.
 8. Record the assigned Datatracker URL and posted revision in the repository.
 
 ## Authorization gate
 
-Final IETF submission is not authorized by this readiness record.
+This record does not authorize final IETF submission.
 
-The configured Author Tools and BibXML credentials may be used for validation
-and reference tooling, but uploading or submitting the draft requires a new,
-explicit authorization from the author.
-
-No submission, posting, or Datatracker mutation was performed while creating
-this record.
+Configured Author Tools and BibXML credentials were not used to submit or
+mutate an IETF resource. Uploading the draft requires a new explicit
+authorization from the author.
