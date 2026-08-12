@@ -17,10 +17,10 @@
 
 | Artifact | SHA-256 |
 |---|---|
-| `draft/draft-mashayekhi-auditable-model-deliberation-00.xml` | `601197f7bc44201a4334f5e5e7b04213930521458464cc70241403a1a0dd875d` |
-| `draft/draft-mashayekhi-auditable-model-deliberation-00.txt` | `984fd01486fe655fc8f15369f951261b78bf8b59bfd5c6d677194182c17364d2` |
-| `draft/draft-mashayekhi-auditable-model-deliberation-00.html` | `64dff62fa6ffa193613693e807677146019e1c30a324ae2972a45281fae245c7` |
-| `draft/VALIDATION.md` | `a1905b942a5d8bb262c9b7d911e5c0aa17e3d623497ade453fda96a84aa20dfa` |
+| `draft/draft-mashayekhi-auditable-model-deliberation-00.xml` | `400afd2fcfe5dc139b39e133e8126460bfeb32571e0f47438dca00fe4032a0b9` |
+| `draft/draft-mashayekhi-auditable-model-deliberation-00.txt` | `2efaf5254f1ad0c9ec1e5a54e88beebc38de95bdad2a46a7d32d27f8e7655a39` |
+| `draft/draft-mashayekhi-auditable-model-deliberation-00.html` | `aa13033e919bdad8b0ba165e07f2d64a2ae5e7abc47a1068b53fdf04d5fc02aa` |
+| `draft/VALIDATION.md` | `508d09bf040cc9b72ac9e439d4c0391a664082da2e9239b2dc2793877b0411a5` |
 
 The authoritative submission source is `draft/draft-mashayekhi-auditable-model-deliberation-00.xml`. The plaintext and HTML
 files are reproducible renderings of that source.

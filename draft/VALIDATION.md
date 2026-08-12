@@ -21,8 +21,8 @@ non-majority closure explanation, and non-normative protocol examples.
 
 | File | Size | SHA-256 |
 |---|---:|---|
-| `draft-mashayekhi-auditable-model-deliberation-00.xml` | 39326 bytes | `601197f7bc44201a4334f5e5e7b04213930521458464cc70241403a1a0dd875d` |
-| `draft-mashayekhi-auditable-model-deliberation-00.txt` | 31930 bytes | `984fd01486fe655fc8f15369f951261b78bf8b59bfd5c6d677194182c17364d2` |
-| `draft-mashayekhi-auditable-model-deliberation-00.html` | 105955 bytes | `64dff62fa6ffa193613693e807677146019e1c30a324ae2972a45281fae245c7` |
+| `draft-mashayekhi-auditable-model-deliberation-00.xml` | 40432 bytes | `400afd2fcfe5dc139b39e133e8126460bfeb32571e0f47438dca00fe4032a0b9` |
+| `draft-mashayekhi-auditable-model-deliberation-00.txt` | 32214 bytes | `2efaf5254f1ad0c9ec1e5a54e88beebc38de95bdad2a46a7d32d27f8e7655a39` |
+| `draft-mashayekhi-auditable-model-deliberation-00.html` | 106714 bytes | `aa13033e919bdad8b0ba165e07f2d64a2ae5e7abc47a1068b53fdf04d5fc02aa` |
 
 Validation does not constitute submission to the IETF Datatracker.

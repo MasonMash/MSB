@@ -842,22 +842,26 @@ Mashayekhi              Expires 13 February 2027               [Page 15]
 Internet-Draft        Auditable Model Deliberation           August 2026
 
 
-   [MAD]      Du, Y., Li, S., and A. Torralba, "Improving Factuality and
-              Reasoning in Language Models through Multiagent Debate",
-              arXiv 2305.14325, 2023,
+   [MAD]      Du, Y., Li, S., Torralba, A., Tenenbaum, J. B., and I.
+              Mordatch, "Improving Factuality and Reasoning in Language
+              Models through Multiagent Debate", arXiv 2305.14325, 2023,
               <https://arxiv.org/abs/2305.14325>.
 
-   [MAD-EVAL] Zhang, H. and Z. Cui, "If Multi-Agent Debate Is the
-              Answer, What Is the Question?", arXiv 2502.08788, 2025,
+   [MAD-EVAL] Zhang, H., Cui, Z., Chen, J., Wang, X., Zhang, Q., Wang,
+              Z., Wu, D., and S. Hu, "Stop Overvaluing Multi-Agent
+              Debate -- We Must Rethink Evaluation and Embrace Model
+              Heterogeneity", arXiv 2502.08788, 2025,
               <https://arxiv.org/abs/2502.08788>.
 
-   [FREE-MAD] Cui, Y., Fu, H., and H. Zhang, "Free-MAD: Consensus-Free
-              Multi-Agent Debate", arXiv 2509.11035, 2025,
-              <https://arxiv.org/abs/2509.11035>.
+   [FREE-MAD] Cui, Y., Fu, H., Zhang, H., Wang, L., and C. Zuo, "Free-
+              MAD: Consensus-Free Multi-Agent Debate", arXiv 2509.11035,
+              2025, <https://arxiv.org/abs/2509.11035>.
 
-   [CIPHER]   Pham, C., Liu, B., and Y. Yang, "Let Models Speak Ciphers:
-              Multiagent Debate through Embeddings", ICLR 2024, 2024,
-              <https://openreview.net/forum?id=YQ4U7L5z4n>.
+   [CIPHER]   Pham, C., Liu, B., Yang, Y., Chen, Z., Liu, T., Yuan, J.,
+              Plummer, B. A., Wang, Z., and H. Yang, "Let Models Speak
+              Ciphers: Multiagent Debate through Embeddings", ICLR 2024,
+              arXiv 2310.06272, 2024,
+              <https://openreview.net/forum?id=sehRvaIPQQ>.
 
    [G2CP]     Ben Khaled, K. and D. Monticolo, "G2CP: A Graph-Grounded
               Communication Protocol for Verifiable and Efficient Multi-
@@ -884,10 +888,6 @@ Internet-Draft        Auditable Model Deliberation           August 2026
               farley-acta-knowledge-units-00, April 2026,
               <https://datatracker.ietf.org/doc/draft-farley-acta-
               knowledge-units/>.
-
-
-
-
 
 
 
