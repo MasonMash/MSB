@@ -266,6 +266,8 @@ Current open questions include:
 | [`spec/INTERNET-DRAFT-00-DECISIONS.md`](spec/INTERNET-DRAFT-00-DECISIONS.md) | Frozen technical and publication boundaries for the first individual Internet-Draft |
 | [`draft/draft-mashayekhi-auditable-model-deliberation-00.xml`](draft/draft-mashayekhi-auditable-model-deliberation-00.xml) | RFCXML v3 source for the first individual Internet-Draft |
 | [`draft/VALIDATION.md`](draft/VALIDATION.md) | Reproducible render and submission-readiness validation record |
+| `draft/SUBMISSION-READINESS.md` | Final pre-submission evidence and authorization gate |
+| `draft/SUBMISSION-CHECKSUMS.sha256` | Integrity manifest for the submission artifacts |
 | [`tools/msb_verify.py`](tools/msb_verify.py) | Reference canonicalization and `artifact_id` tool |
 | [`test-vectors/`](test-vectors/) | Public canonical-profile test inputs |
 | [`research/EVIDENCE_LEDGER.md`](research/EVIDENCE_LEDGER.md) | Deduplicated publication-facing evidence |
