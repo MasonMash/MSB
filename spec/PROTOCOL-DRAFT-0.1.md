@@ -281,27 +281,21 @@ It MUST preserve the externally observable invariants defined by the active prot
 
 A protocol profile SHOULD provide a deterministic method of deriving artifact identity from artifact content.
 
-The current prototype computes a SHA-256 digest over a restricted canonical JSON representation of the artifact body, excluding the `artifact_id` field.
+The active research profile computes a SHA-256 digest over the restricted canonical JSON representation defined by [MSB Restricted Canonical JSON Profile 0.1](CANONICAL-JSON-PROFILE-0.1.md). The identifier calculation removes exactly the top-level `artifact_id` member before canonicalization.
 
-The prototype identifier form is:
+The identifier form for that profile is:
 
-`urn:sdap:sha256:<64-hex-digest>`
+`sha256:<64-lowercase-hex>`
 
-The `sdap` namespace is experimental. It is not a registered namespace and does not commit a future standards-track document to this identifier form.
+The canonical JSON profile is the controlling specification for identifier calculation and verification. The earlier experimental `urn:sdap:sha256:` form is not used by this profile.
 
-### 5.2 Prototype Canonicalization Profile
+### 5.2 Restricted Canonical JSON Profile
 
-The current deterministic implementation:
+The complete serialization, normalization, member-ordering, duplicate-key, normalization-collision, numeric-domain, encoding, and failure requirements are defined by [MSB Restricted Canonical JSON Profile 0.1](CANONICAL-JSON-PROFILE-0.1.md).
 
-- normalizes strings to Unicode NFC;
-- orders object keys deterministically;
-- uses compact deterministic JSON serialization;
-- accepts null values, booleans, integers, strings, arrays, and objects; and
-- rejects floating-point numbers in the restricted profile.
+This restricted profile is not a claim of compatibility with RFC 8785 JSON Canonicalization Scheme.
 
-This behavior is a prototype encoding profile, not a claim of compatibility with RFC 8785 JSON Canonicalization Scheme.
-
-A future standards-track version SHOULD either adopt an established canonicalization standard or define complete interoperable test vectors for any alternative.
+Independent positive and negative test vectors are required before the profile is treated as an interoperability result.
 
 ## 6. Immutable History
 

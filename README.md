@@ -2,64 +2,61 @@
 
 **A research project for interoperable, auditable deliberation between heterogeneous AI models.**
 
-Modern AI systems increasingly combine models from different providers, architectures, and capability classes. Transport and tool invocation can be standardized, yet the reasoning process between models is still commonly represented as free-form conversation, provider-specific state, or an opaque sequence of agent messages.
+MSB studies the minimum public record that heterogeneous AI systems may need in order to inspect, challenge, revise, and audit one another's contributions without exposing private reasoning.
 
-That creates a practical interoperability problem.
+The project is a research and experimental environment. It is not an adopted standard, an IETF publication, or a claim that the current artifact model is final.
 
-When one model challenges another, an external reviewer should be able to determine:
+## What MSB Is
+
+MSB investigates how independently implemented AI systems could share an auditable deliberation state across differences in provider, architecture, model family, orchestration framework, and private reasoning format.
+
+The project currently has three distinct layers:
+
+| Layer | Meaning | Current status |
+|---|---|---|
+| MSB | The research project and public repository | Active research |
+| Current research profile | Candidate artifact semantics and technical contracts used to test the research thesis | Experimental |
+| Future standards proposal | A possible independently named interoperability specification derived from sufficient evidence | Not yet authored or submitted |
+
+Keeping these layers separate prevents experimental design choices from being mistaken for settled standards requirements.
+
+## Research Question
+
+Can heterogeneous AI systems participate in a shared deliberation whose public record allows an independent reviewer to determine:
 
 - what was claimed;
 - what evidence supported the claim;
 - what was challenged;
 - what changed after the challenge;
-- which objections remain unresolved; and
-- why the final decision follows from the public record.
+- which objections remain unresolved;
+- what failures occurred;
+- whether termination was legitimate; and
+- why a decision does or does not follow from the public record?
 
-Doing that should not require access to private chain-of-thought, hidden state, system prompts, model weights, or provider-specific internal memory.
+The reviewer should not require access to private chain-of-thought, hidden state, system prompts, model weights, private memory, or provider-specific reasoning payloads.
 
-MSB investigates a protocol layer for that public record.
+## Why Message Transport Is Not Enough
 
-## The Problem
+A multi-model system can exchange text or invoke tools without sharing stable semantics for deliberation.
 
-A multi-model system can exchange text without having a shared semantics for deliberation.
-
-Two models may be able to communicate while still lacking a provider-neutral contract for:
-
-- claims;
-- evidence provenance;
-- objections;
-- revisions;
-- decisions;
-- failures;
-- termination;
-- immutable history; and
-- verifiable reference closure.
-
-Without such a contract, interoperability at the transport layer does not automatically produce interoperability at the deliberation layer.
-
-MSB treats this as a protocol problem.
-
-### Why a Chat Log Is Not Enough
-
-A transcript can show that messages were exchanged, but it does not necessarily provide stable protocol semantics.
-
-Free-form conversation does not inherently define:
+A conventional transcript does not inherently define:
 
 - immutable artifact identity;
 - evidence provenance;
 - explicit challenge relationships;
-- supersession without history mutation;
+- revision without historical mutation;
 - machine-verifiable failure states;
-- terminal-state semantics; or
-- proof that a final decision considered every blocking objection in scope.
+- terminal-state semantics;
+- unresolved-objection handling; or
+- verifiable closure over the public record.
 
-Those properties must be represented explicitly if independently implemented systems are expected to interoperate and audit one another.
+Transport interoperability therefore does not automatically produce deliberation interoperability. MSB studies whether a narrow public-artifact contract can bridge that gap.
 
-### Interoperability Boundary
+## Public Study Model
 
-The intended architecture is deliberately narrow:
+The intended boundary is deliberately narrow:
 
-```text
+~~~text
 private model computation
           |
           v
@@ -76,37 +73,124 @@ challenge / revision / decision
           |
           v
 auditable closure and termination
-```
+~~~
 
-Models may differ internally at every step above the public-artifact boundary.
+Models may differ internally at every step above the public-artifact boundary. The design under study concerns public artifacts, not private reasoning traces.
 
-The protocol exists so that they do not need to agree on their private reasoning representation in order to share an auditable deliberation state.
+A participating implementation may use arbitrary private computation to produce an artifact. Interoperability should depend only on the public contract and should never require disclosure of private chain-of-thought.
 
-## Design Thesis
+## Candidate Artifact Lifecycle
 
-The protocol boundary should contain **public artifacts, not private reasoning traces**.
+The current research profile studies seven candidate public-artifact semantics:
 
-A conforming model may perform arbitrary private computation internally. What crosses the interoperability boundary is a compact artifact that another implementation can inspect, challenge, reference, supersede, or decide upon.
+| Candidate semantic | Research role | Current status |
+|---|---|---|
+| `CLAIM` | Introduces a proposition that can be supported, challenged, revised, or decided | Specified in Research Draft 0.1 |
+| `EVIDENCE` | Provides public support with explicit provenance | Specified in Research Draft 0.1 |
+| `OBJECTION` | Challenges an artifact or protocol assumption and may be blocking | Specified in Research Draft 0.1 |
+| `REVISION` | Creates a new public position without mutating history | Specified in Research Draft 0.1 |
+| `DECISION` | Records an outcome, its public basis, and objection dispositions | Specified in Research Draft 0.1 |
+| `FAILURE` | Records why normal progression could not continue | Specified in Research Draft 0.1 |
+| `TERMINATION` | Records an explicit terminal outcome | Specified in Research Draft 0.1 |
 
-The research draft currently defines seven core public semantics:
+A representative lifecycle is:
 
-1. `CLAIM`
-2. `EVIDENCE`
-3. `OBJECTION`
-4. `REVISION`
-5. `DECISION`
-6. `FAILURE`
-7. `TERMINATION`
+~~~text
+CLAIM
+  +-- EVIDENCE
+  +-- OBJECTION
+        +-- REVISION
+              +-- EVIDENCE
+                    +-- DECISION
+                          +-- TERMINATION
+~~~
 
-The associated protocol work includes evidence provenance, content-addressed identity, append-only history, versioned extensions, failure semantics, and closure verification.
+`FAILURE` may terminate or interrupt the lifecycle when validation, execution, authorization, resource, or protocol conditions prevent normal continuation.
 
-## What Success Would Mean
+These semantics are candidates in the current profile. They are not asserted to be the final vocabulary of a future standards proposal.
 
-A successful standard would allow independently implemented models to participate in the same deliberation without requiring a shared vendor, model family, orchestration framework, or private reasoning format.
+## Current Research Profile
 
-A third party should be able to audit the resulting decision from the public artifact graph alone.
+Research Draft 0.1 studies a public artifact graph with:
 
-That is the central invariant of this project.
+- candidate claim, evidence, objection, revision, decision, failure, and termination semantics;
+- explicit evidence provenance;
+- content-addressed artifact identity;
+- append-only history;
+- versioned extensions;
+- fail-closed validation;
+- explicit terminal states; and
+- decision-closure checks for unresolved blocking objections.
+
+The research profile separates two different provenance concerns:
+
+| Provenance level | Purpose |
+|---|---|
+| Artifact-level provenance | Classifies support carried by a public deliberation artifact |
+| Research/publication evidence class | Classifies what the project may responsibly claim from experiments, traces, model analysis, failures, and deterministic tests |
+
+These taxonomies operate at different levels and should not be treated as a single vocabulary.
+
+The artifact-level classes currently defined by the research draft are:
+
+- `TRACE_VERIFIED_OBSERVATION`
+- `MODEL_GENERATED_ANALYSIS`
+- `EXTERNAL_EVIDENCE`
+- `HYPOTHESIS`
+
+The publication-facing distinctions are documented in the [Evidence Ledger](research/EVIDENCE_LEDGER.md) and [Methodology](research/METHODOLOGY.md).
+
+## What Is Implemented Today
+
+The repository's current public implementation surface is intentionally narrower than the complete research draft.
+
+| Capability | Repository status | Evidence boundary |
+|---|---|---|
+| Restricted canonical JSON profile | Implemented | Defined in the canonical profile |
+| Deterministic canonical serialization | Implemented in `tools/msb_verify.py` | Profile-level behavior |
+| SHA-256-based `artifact_id` calculation | Implemented in `tools/msb_verify.py` | Profile-level behavior |
+| `artifact_id` verification | Implemented in `tools/msb_verify.py` | Profile-level behavior |
+| Positive canonical JSON vectors | Four public input vectors | Initial and incomplete suite |
+| Negative canonical JSON vectors | Not currently present | Required future work |
+| Full seven-semantic protocol verifier | Not currently provided as a public repository tool | Must not be inferred from `msb_verify.py` |
+| Independent implementation | Not yet available | Interoperability remains unproven |
+| Cross-implementation testing | Not yet performed | Required before stronger interoperability claims |
+
+The current verifier calculates or checks canonical identifiers. Its existence does not mean that every semantic rule in Research Draft 0.1 is enforced by a single public tool.
+
+## Evidence and Limitations
+
+Three study stages inform the current research profile.
+
+| Study | Observed result | Responsible interpretation |
+|---|---|---|
+| `EXP-001-R2` | A heterogeneous twelve-round panel completed 12 of 12 planned calls | Structured public artifacts carried proposals, objections, revisions, and judgment; the direct context was single-hop |
+| `EXP-002` | The canonical run stopped fail-closed at Round 2 after schema rejection | A harness-stress result that exposed validation, accounting, and forensic-persistence defects; not a complete quality comparison |
+| `EXP-003` | Seven targeted deterministic conformance groups passed with no paid model calls | Verification of tested behavior in the implemented research profile; not proof of universal interoperability, security, scale, or performance |
+
+The evidence base currently supports continued research and publication of an experimental research draft. It does not establish:
+
+- independent cross-implementation interoperability;
+- adversarial security;
+- privacy safety across deployments;
+- scalability;
+- statistical performance;
+- token efficiency;
+- universal model compatibility; or
+- readiness as a completed standard.
+
+Historical experimental evidence and the repository's current public implementation are also distinct:
+
+| Evidence surface | Meaning |
+|---|---|
+| Historical `EXP-003` result | Tested behavior of the prototype used in that experiment |
+| Current `msb_verify.py` | Restricted canonical JSON and identifier implementation |
+| Current public vectors | Four positive canonical JSON inputs |
+| Independent interoperability evidence | Not yet available |
+
+Model-generated quantitative language is not treated as empirical evidence unless the harness actually executed and recorded the claimed measurement.
+
+Raw canonical traces are not included in the initial public snapshot. The repository publishes cryptographic lineage for canonical local evidence sets. Publishing raw or sanitized traces requires a separate disclosure and privacy review.
 
 ## What MSB Is Not
 
@@ -118,102 +202,80 @@ MSB is not intended to be:
 - a tool-calling protocol;
 - a model-control API;
 - a transport protocol;
-- a hidden language between models; or
-- a mechanism for extracting private chain-of-thought.
+- a hidden language between models;
+- a mechanism for extracting private chain-of-thought;
+- a guarantee of factual correctness or agreement; or
+- a completed consensus or security system.
 
-Those systems may carry MSB artifacts, but they are outside the protocol's core scope.
+Existing systems may transport or process candidate MSB artifacts, but those systems remain outside the core research scope.
 
-## Current Status
+## From Research to a Future Standards Proposal
 
-The repository contains **Research Draft 0.1**.
+The project's next controlled objective is to complete and internally reconcile the public GitHub repository across:
 
-It is an experimental research draft and **not an adopted standard**.
+- research narrative;
+- specification language;
+- evidence classification;
+- canonical representation;
+- verifier behavior;
+- test vectors;
+- security and privacy analysis; and
+- contribution and review guidance.
 
-Three study stages inform the current specification:
+After that repository phase is complete, the project intends to author and publish its own independently named Internet-Draft `-00`.
 
-### EXP-001-R2
+Publication of an Internet-Draft would begin public standards discussion. It would not imply IETF endorsement, adoption, consensus, or standards status.
 
-A heterogeneous twelve-round model panel completed 12 of 12 planned calls.
+Progress toward that draft is evidence-gated:
 
-It demonstrated that structured public artifacts can carry useful design proposals, objections, revisions, and final judgment across heterogeneous models.
+| Gate | Required outcome |
+|---|---|
+| Repository consistency | Narrative, specification, evidence, implementation, and tests do not contradict one another |
+| Canonical profile completeness | Positive and negative vectors cover the stated representation contract |
+| Independent implementation readiness | Another implementation can be built without private assumptions |
+| Interoperability evidence | Independent implementations exchange and verify compatible artifacts |
+| Security and privacy review | Threats, leakage boundaries, abuse cases, and mitigations are documented |
+| Naming review | Repository naming history and current protocol-name conflicts are reviewed before draft naming |
+| Draft preparation | Scope and normative requirements are supported by available evidence |
+| Submission | An independently named Internet-Draft `-00` is authored and published by the project |
 
-Its direct deliberation context was **single-hop**: each participant received the experiment specification and the immediately preceding public artifact rather than the complete accumulated history.
+The future proposal's name, final vocabulary, conformance structure, and standards path remain open until the relevant evidence and review gates are satisfied.
 
-### EXP-002
+## Open Research Questions
 
-EXP-002 introduced stricter schema enforcement, explicit evidence provenance, and complete accumulated public history.
+Current open questions include:
 
-The canonical run stopped fail-closed at Round 2 after a validation rejection.
-
-**EXP-002 is not a full structured-vs-structured quality comparison.** Its scientific value is as a harness-stress result that exposed validation, accounting, and forensic-persistence defects.
-
-### EXP-003
-
-EXP-003 used no paid model calls.
-
-Seven deterministic conformance tests passed for the targeted semantics introduced in response to the earlier findings:
-
-- provenance-aware evidence validation;
-- content addressing;
-- append-only artifact history;
-- failure and termination;
-- version and extension behavior;
-- closure verification; and
-- immutable canonical trace storage.
-
-These tests verify the implemented research profile. They do not establish universal interoperability, security, or performance.
+- Is the seven-semantic artifact model minimal, excessive, or incomplete?
+- Which references are required for independently verifiable closure?
+- How should authority, adjudication, and conflicting decisions be represented?
+- Which objections must block closure?
+- What privacy classifications are required at the public boundary?
+- How should malicious, misleading, or low-quality artifacts be handled?
+- Which extension rules preserve interoperability across versions?
+- What conformance roles and levels are justified by implementation evidence?
+- How should transports carry artifacts without redefining their semantics?
+- What test corpus is sufficient for independent implementation?
+- What measurements are needed before making efficiency or scalability claims?
 
 ## Repository Map
 
-- [`spec/PROTOCOL-DRAFT-0.1.md`](spec/PROTOCOL-DRAFT-0.1.md) — protocol research draft
-- [`research/EVIDENCE_LEDGER.md`](research/EVIDENCE_LEDGER.md) — deduplicated scientific evidence
-- [`research/METHODOLOGY.md`](research/METHODOLOGY.md) — experimental design and evidence policy
-- [`evidence/manifest.json`](evidence/manifest.json) — cryptographic evidence lineage
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) — contribution and review requirements
-- [`CITATION.cff`](CITATION.cff) — citation metadata
-
-## Evidence Policy
-
-The project keeps several categories deliberately separate:
-
-- harness-observed experimental facts;
-- trace-verified observations;
-- model-generated analysis;
-- methodological limitations;
-- harness failures;
-- deterministic conformance results; and
-- unsupported empirical-sounding model output.
-
-A model-generated benchmark is not an experimental result merely because a model presented it as one.
-
-The evidence ledger is the publication-facing index for these distinctions.
-
-## Public Data Boundary
-
-Raw canonical traces are not included in this initial public snapshot.
-
-The repository publishes cryptographic lineage for the canonical local evidence sets. A raw or sanitized trace dataset requires a separate disclosure and privacy review before publication.
-
-## Standards Direction
-
-The current draft is written as a research protocol document rather than as a claim of completed standardization.
-
-The intended progression is:
-
-1. public technical review;
-2. independent implementation feedback;
-3. interoperable test vectors;
-4. refinement of normative requirements;
-5. specification freeze; and
-6. evaluation of an appropriate standards-track venue.
-
-The project will not treat model consensus as a substitute for implementation evidence or independent review.
+| Path | Purpose |
+|---|---|
+| [`spec/PROTOCOL-DRAFT-0.1.md`](spec/PROTOCOL-DRAFT-0.1.md) | Experimental protocol research draft |
+| [`spec/CANONICAL-JSON-PROFILE-0.1.md`](spec/CANONICAL-JSON-PROFILE-0.1.md) | Restricted canonical JSON and identifier profile |
+| [`tools/msb_verify.py`](tools/msb_verify.py) | Reference canonicalization and `artifact_id` tool |
+| [`test-vectors/`](test-vectors/) | Public canonical-profile test inputs |
+| [`research/EVIDENCE_LEDGER.md`](research/EVIDENCE_LEDGER.md) | Deduplicated publication-facing evidence |
+| [`research/METHODOLOGY.md`](research/METHODOLOGY.md) | Experimental design and evidence policy |
+| [`evidence/manifest.json`](evidence/manifest.json) | Cryptographic evidence lineage |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution and review requirements |
+| [`CITATION.cff`](CITATION.cff) | Citation metadata |
 
 ## Contributing
 
 Technical criticism is encouraged.
 
-The highest-value contributions are those that expose ambiguity, interoperability failure, security risk, privacy leakage, or a missing conformance condition.
+The highest-value contributions are those that expose ambiguity, interoperability failure, security risk, privacy leakage, unsupported claims, or missing conformance conditions.
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 

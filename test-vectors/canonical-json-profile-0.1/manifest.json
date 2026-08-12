@@ -1,0 +1,22 @@
+{
+  "profile": "MSB Restricted Canonical JSON Profile 0.1",
+  "positive": [
+    {"name":"001-object-key-order"},
+    {"name":"002-nfc-string-value"},
+    {"name":"003-admitted-scalars"},
+    {"name":"004-string-escaping"}
+  ],
+  "negative": [
+    {"name":"001-duplicate-key","operation":"calculate","error_class":"malformed_input"},
+    {"name":"002-floating-point","operation":"calculate","error_class":"unsupported_value"},
+    {"name":"003-normalization-collision","operation":"calculate","error_class":"normalization_collision"},
+    {"name":"004-integer-out-of-range","operation":"calculate","error_class":"unsupported_value"},
+    {"name":"005-utf8-bom","operation":"calculate","error_class":"malformed_input"},
+    {"name":"006-malformed-utf8","operation":"calculate","error_class":"malformed_input"},
+    {"name":"007-unpaired-surrogate","operation":"calculate","error_class":"unsupported_value"},
+    {"name":"008-missing-artifact-id","operation":"verify","error_class":"invalid_artifact_identifier_syntax"},
+    {"name":"009-invalid-artifact-id","operation":"verify","error_class":"invalid_artifact_identifier_syntax"},
+    {"name":"010-artifact-id-mismatch","operation":"verify","error_class":"artifact_identifier_mismatch"},
+    {"name":"011-malformed-json","operation":"calculate","error_class":"malformed_input"}
+  ]
+}
