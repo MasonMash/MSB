@@ -1557,7 +1557,7 @@ li > p:last-of-type:only-child {
 <p id="section-2-2">The BCP 14 subseries comprises the requirement-language specifications cited above; see <span>[<a href="#BCP14" class="cite xref">BCP14</a>]</span>.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-2-3">
         <dt id="section-2-3.1">Public artifact</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.2">An inspectable protocol object intended to cross the interoperability boundary.<a href="#section-2-3.2" class="pilcrow">¶</a>
+        <dd style="margin-left: 1.5em" id="section-2-3.2">An inspectable protocol object intended to cross the interoperability boundary. Public means shared with the authorized participants at that boundary; it does not imply unrestricted Internet disclosure.<a href="#section-2-3.2" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-3.3">Private model state</dt>
@@ -1707,75 +1707,89 @@ li > p:last-of-type:only-child {
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-claim" class="section-name selfRef">CLAIM</a>
         </h3>
 <p id="section-5.1-1">
-          A <code>CLAIM</code> introduces a public proposition that can be
-          supported, challenged, revised, or decided. A claim
-          <span class="bcp14">SHOULD</span> be specific enough for another participant to
-          identify what is contested.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+          A <code>CLAIM</code> introduces a proposition that can be supported,
+          challenged, revised, or decided.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">
+          Its payload <span class="bcp14">MUST</span> contain a non-empty
+          <code>statement</code> string.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 </section>
 <section id="section-5.2">
         <h3 id="name-evidence">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-evidence" class="section-name selfRef">EVIDENCE</a>
         </h3>
 <p id="section-5.2-1">
-          An <code>EVIDENCE</code> artifact provides public support relevant to
-          one or more claims. It <span class="bcp14">MUST</span> carry one provenance
-          class from <a href="#provenance" class="auto internal xref">Section 6</a>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+          An <code>EVIDENCE</code> artifact provides support relevant to one or
+          more artifacts.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">
+          Its payload <span class="bcp14">MUST</span> contain a non-empty
+          <code>content</code> string and one <code>provenance_class</code> value
+          from <a href="#provenance" class="auto internal xref">Section 6</a>. Supporting evidence
+          <span class="bcp14">MUST</span> carry an applicable <code>supports</code>
+          reference.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 </section>
 <section id="section-5.3">
         <h3 id="name-objection">
 <a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-objection" class="section-name selfRef">OBJECTION</a>
         </h3>
 <p id="section-5.3-1">
-          An <code>OBJECTION</code> challenges a claim, evidence item, revision,
-          decision, or protocol assumption. It <span class="bcp14">MAY</span> be marked
-          blocking. A blocking objection <span class="bcp14">MUST</span> receive a public
-          disposition or remain visibly unresolved.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+          An <code>OBJECTION</code> challenges an artifact or protocol assumption.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-2">
+          Its payload <span class="bcp14">MUST</span> contain a non-empty
+          <code>statement</code> string and a Boolean <code>blocking</code> member.
+          It <span class="bcp14">MUST</span> carry at least one <code>objects-to</code>
+          reference.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 </section>
 <section id="section-5.4">
         <h3 id="name-revision">
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-revision" class="section-name selfRef">REVISION</a>
         </h3>
 <p id="section-5.4-1">
-          A <code>REVISION</code> creates a new public position and
-          <span class="bcp14">MUST NOT</span> mutate the artifact it revises. It
-          <span class="bcp14">SHOULD</span> reference the artifacts it modifies or
-          supersedes. A revision <span class="bcp14">MAY</span> reference multiple prior
-          artifacts; this document defines no separate merge type.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+          A <code>REVISION</code> creates a new position without mutating history.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">
+          Its payload <span class="bcp14">MUST</span> contain a non-empty
+          <code>statement</code> string. It <span class="bcp14">MUST</span> carry at least
+          one <code>revises</code> or <code>supersedes</code> reference.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 </section>
 <section id="section-5.5">
         <h3 id="name-decision">
 <a href="#section-5.5" class="section-number selfRef">5.5. </a><a href="#name-decision" class="section-name selfRef">DECISION</a>
         </h3>
 <p id="section-5.5-1">
-          A <code>DECISION</code> records an outcome, its public basis, relevant
-          references, blocking-objection dispositions, and unresolved issues.
-          It <span class="bcp14">MUST NOT</span> claim closure while silently omitting a
-          reachable unresolved blocking objection.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
+          A <code>DECISION</code> records an outcome and its declared closure.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
+<p id="section-5.5-2">
+          Its payload <span class="bcp14">MUST</span> contain a non-empty
+          <code>outcome</code> string, a <code>status</code> value of
+          <code>provisional</code> or <code>final</code>, an
+          <code>objection_dispositions</code> array, and an
+          <code>unresolved_issues</code> array.<a href="#section-5.5-2" class="pilcrow">¶</a></p>
+<p id="section-5.5-3">
+          A final decision <span class="bcp14">MUST NOT</span> omit a reachable unresolved
+          blocking objection.<a href="#section-5.5-3" class="pilcrow">¶</a></p>
 </section>
 <section id="section-5.6">
         <h3 id="name-failure">
 <a href="#section-5.6" class="section-number selfRef">5.6. </a><a href="#name-failure" class="section-name selfRef">FAILURE</a>
         </h3>
 <p id="section-5.6-1">
-          A <code>FAILURE</code> records that a requested protocol operation
-          could not complete. Failure classes include malformed artifacts,
-          unsupported versions, unsupported extensions, unavailable
-          references, integrity failures, policy refusals, capability limits,
-          timeouts, and resource limits. A failure
-          <span class="bcp14">MUST NOT</span> be silently converted into success.<a href="#section-5.6-1" class="pilcrow">¶</a></p>
+          A <code>FAILURE</code> records that processing could not complete.<a href="#section-5.6-1" class="pilcrow">¶</a></p>
+<p id="section-5.6-2">
+          Its payload <span class="bcp14">MUST</span> contain non-empty <code>code</code>
+          and <code>description</code> strings and a Boolean
+          <code>retryable</code> member. A failure <span class="bcp14">MUST NOT</span> be
+          silently converted into success.<a href="#section-5.6-2" class="pilcrow">¶</a></p>
 </section>
 <section id="section-5.7">
         <h3 id="name-termination">
 <a href="#section-5.7" class="section-number selfRef">5.7. </a><a href="#name-termination" class="section-name selfRef">TERMINATION</a>
         </h3>
 <p id="section-5.7-1">
-          A <code>TERMINATION</code> records one terminal state:
-          <code>completed</code>, <code>suspended</code>, <code>cancelled</code>,
-          <code>deadlock</code>, or <code>exhausted</code>.<a href="#section-5.7-1" class="pilcrow">¶</a></p>
+          A <code>TERMINATION</code> payload <span class="bcp14">MUST</span> contain a
+          <code>state</code> value of <code>completed</code>, <code>suspended</code>,
+          <code>cancelled</code>, <code>deadlock</code>, or <code>exhausted</code>.<a href="#section-5.7-1" class="pilcrow">¶</a></p>
 <p id="section-5.7-2">
-          A completed termination <span class="bcp14">MUST</span> identify a final
+          A completed termination <span class="bcp14">MUST</span> reference a final
           decision. A deadlock or exhausted termination
-          <span class="bcp14">MUST</span> preserve the relevant unresolved blocking
+          <span class="bcp14">MUST</span> preserve relevant unresolved blocking
           objections.<a href="#section-5.7-2" class="pilcrow">¶</a></p>
 </section>
 </section>
@@ -2095,21 +2109,30 @@ li > p:last-of-type:only-child {
 <a href="#section-16" class="section-number selfRef">16. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <p id="section-16-1">
-        Implementations must consider artifact forgery, author impersonation,
-        replay, equivocation, malicious references, provenance spoofing,
-        prompt injection carried as evidence, evidence poisoning, role
-        hijacking, denial of service through unbounded graphs, adversarial
-        extensions, omitted artifacts, and false closure.<a href="#section-16-1" class="pilcrow">¶</a></p>
+        Relevant actors include artifact producers, recipients, closure
+        verifiers, orchestrators, evidence providers, storage operators, and
+        attackers able to submit or replay artifacts. Protected assets include
+        artifact integrity, provenance, decision closure, authorization
+        policy, private state, sensitive application data, and availability.<a href="#section-16-1" class="pilcrow">¶</a></p>
 <p id="section-16-2">
-        Content addressing detects changes to artifact content. It does not
-        authenticate an author, authorize an action, prove model identity, or
-        establish evidence trustworthiness. Authentication, signatures, key
-        discovery, authorization, and non-repudiation are outside this
-        revision.<a href="#section-16-2" class="pilcrow">¶</a></p>
+        Trust boundaries exist between private computation and shared
+        artifacts, transports and validators, external evidence and policy,
+        and artifact storage and closure verification.<a href="#section-16-2" class="pilcrow">¶</a></p>
 <p id="section-16-3">
-        Untrusted evidence must be processed as data rather than as authority
-        to modify system instructions, role policy, privacy policy, or
-        authorization state.<a href="#section-16-3" class="pilcrow">¶</a></p>
+        Threats include forgery, impersonation, replay, equivocation,
+        malicious references, provenance spoofing, prompt injection, evidence
+        poisoning, role hijacking, omitted objections, false closure,
+        adversarial extensions, and graph-based denial of service.<a href="#section-16-3" class="pilcrow">¶</a></p>
+<p id="section-16-4">
+        Implementations <span class="bcp14">SHOULD</span> authenticate producers when
+        attribution is required, reject identifier mismatches and cycles,
+        enforce resource limits, separate untrusted evidence from policy,
+        preserve blocking objections, and fail closed on unavailable required
+        references.<a href="#section-16-4" class="pilcrow">¶</a></p>
+<p id="section-16-5">
+        Content addressing does not establish identity, authorization,
+        freshness, non-repudiation, or evidence truth. See
+        <span>[<a href="#RFC3552" class="cite xref">RFC3552</a>]</span> for security-consideration guidance.<a href="#section-16-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy">
@@ -2118,15 +2141,26 @@ li > p:last-of-type:only-child {
 <a href="#section-17" class="section-number selfRef">17. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
       </h2>
 <p id="section-17-1">
-        A conforming implementation <span class="bcp14">MUST NOT</span> require disclosure
-        of private chain-of-thought or private model state for interoperability.<a href="#section-17-1" class="pilcrow">¶</a></p>
+        Public means shared at the interoperability boundary and does not imply
+        unrestricted Internet disclosure. A conforming implementation
+        <span class="bcp14">MUST NOT</span> require disclosure of private chain-of-thought
+        or private model state.<a href="#section-17-1" class="pilcrow">¶</a></p>
 <p id="section-17-2">
-        Public artifacts can contain sensitive information even when they
-        contain no chain-of-thought. Implementations must apply applicable
-        disclosure, minimization, authorization, and retention policies before
-        publication or forwarding.<a href="#section-17-2" class="pilcrow">¶</a></p>
+        Implementations <span class="bcp14">SHOULD</span> minimize payloads and provider
+        metadata, disclose artifacts only to authorized recipients, define
+        retention and deletion policy, and protect logs and backups.<a href="#section-17-2" class="pilcrow">¶</a></p>
 <p id="section-17-3">
-        This revision defines no wire-level privacy classification labels.<a href="#section-17-3" class="pilcrow">¶</a></p>
+        Stable identifiers and reference graphs can create linkability and
+        correlation across sessions. Deployments <span class="bcp14">SHOULD</span> avoid
+        unnecessary personal or cross-context identifiers and document
+        secondary-use restrictions.<a href="#section-17-3" class="pilcrow">¶</a></p>
+<p id="section-17-4">
+        Sanitization occurs before publication or forwarding. Removing
+        chain-of-thought alone does not remove personal data, secrets,
+        confidential evidence, or sensitive metadata.<a href="#section-17-4" class="pilcrow">¶</a></p>
+<p id="section-17-5">
+        This revision defines no wire-level privacy labels. See
+        <span>[<a href="#RFC6973" class="cite xref">RFC6973</a>]</span> for privacy-design guidance.<a href="#section-17-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <section id="section-18">
@@ -2216,6 +2250,14 @@ li > p:last-of-type:only-child {
 <a href="#section-21.2" class="section-number selfRef">21.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="RFC3552">[RFC3552]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span> and <span class="refAuthor">B. Korver</span>, <span class="refTitle">"Guidelines for Writing RFC Text on Security Considerations"</span>, <span class="seriesInfo">BCP 72</span>, <span class="seriesInfo">RFC 3552</span>, <span class="seriesInfo">DOI 10.17487/RFC3552</span>, <time datetime="2003-07" class="refDate">July 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3552">https://www.rfc-editor.org/info/rfc3552</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6973">[RFC6973]</dt>
+        <dd>
+<span class="refAuthor">Cooper, A.</span> and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Privacy Considerations for Internet Protocols"</span>, <span class="seriesInfo">RFC 6973</span>, <span class="seriesInfo">DOI 10.17487/RFC6973</span>, <time datetime="2013-07" class="refDate">July 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6973">https://www.rfc-editor.org/info/rfc6973</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8785">[RFC8785]</dt>
         <dd>
 <span class="refAuthor">Rundgren, A.</span>, <span class="refAuthor">Jordan, B.</span>, and <span class="refAuthor">S. Erdtman</span>, <span class="refTitle">"JSON Canonicalization Scheme (JCS)"</span>, <span class="seriesInfo">RFC 8785</span>, <span class="seriesInfo">DOI 10.17487/RFC8785</span>, <time datetime="2020-06" class="refDate">June 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8785">https://www.rfc-editor.org/info/rfc8785</a>&gt;</span>. </dd>

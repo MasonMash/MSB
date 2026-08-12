@@ -94,7 +94,7 @@
       <t>The BCP 14 subseries comprises the requirement-language specifications cited above; see <xref target="BCP14" />.</t>
       <dl>
         <dt>Public artifact</dt>
-        <dd>An inspectable protocol object intended to cross the interoperability boundary.</dd>
+        <dd>An inspectable protocol object intended to cross the interoperability boundary. Public means shared with the authorized participants at that boundary; it does not imply unrestricted Internet disclosure.</dd>
         <dt>Private model state</dt>
         <dd>Implementation-internal material not required for protocol interoperability.</dd>
         <dt>Deliberation</dt>
@@ -205,70 +205,91 @@
       <section>
         <name>CLAIM</name>
         <t>
-          A <tt>CLAIM</tt> introduces a public proposition that can be
-          supported, challenged, revised, or decided. A claim
-          <bcp14>SHOULD</bcp14> be specific enough for another participant to
-          identify what is contested.
+          A <tt>CLAIM</tt> introduces a proposition that can be supported,
+          challenged, revised, or decided.
+        </t>
+        <t>
+          Its payload <bcp14>MUST</bcp14> contain a non-empty
+          <tt>statement</tt> string.
         </t>
       </section>
       <section>
         <name>EVIDENCE</name>
         <t>
-          An <tt>EVIDENCE</tt> artifact provides public support relevant to
-          one or more claims. It <bcp14>MUST</bcp14> carry one provenance
-          class from <xref target="provenance" />.
+          An <tt>EVIDENCE</tt> artifact provides support relevant to one or
+          more artifacts.
+        </t>
+        <t>
+          Its payload <bcp14>MUST</bcp14> contain a non-empty
+          <tt>content</tt> string and one <tt>provenance_class</tt> value
+          from <xref target="provenance" />. Supporting evidence
+          <bcp14>MUST</bcp14> carry an applicable <tt>supports</tt>
+          reference.
         </t>
       </section>
       <section>
         <name>OBJECTION</name>
         <t>
-          An <tt>OBJECTION</tt> challenges a claim, evidence item, revision,
-          decision, or protocol assumption. It <bcp14>MAY</bcp14> be marked
-          blocking. A blocking objection <bcp14>MUST</bcp14> receive a public
-          disposition or remain visibly unresolved.
+          An <tt>OBJECTION</tt> challenges an artifact or protocol assumption.
+        </t>
+        <t>
+          Its payload <bcp14>MUST</bcp14> contain a non-empty
+          <tt>statement</tt> string and a Boolean <tt>blocking</tt> member.
+          It <bcp14>MUST</bcp14> carry at least one <tt>objects-to</tt>
+          reference.
         </t>
       </section>
       <section>
         <name>REVISION</name>
         <t>
-          A <tt>REVISION</tt> creates a new public position and
-          <bcp14>MUST NOT</bcp14> mutate the artifact it revises. It
-          <bcp14>SHOULD</bcp14> reference the artifacts it modifies or
-          supersedes. A revision <bcp14>MAY</bcp14> reference multiple prior
-          artifacts; this document defines no separate merge type.
+          A <tt>REVISION</tt> creates a new position without mutating history.
+        </t>
+        <t>
+          Its payload <bcp14>MUST</bcp14> contain a non-empty
+          <tt>statement</tt> string. It <bcp14>MUST</bcp14> carry at least
+          one <tt>revises</tt> or <tt>supersedes</tt> reference.
         </t>
       </section>
       <section>
         <name>DECISION</name>
         <t>
-          A <tt>DECISION</tt> records an outcome, its public basis, relevant
-          references, blocking-objection dispositions, and unresolved issues.
-          It <bcp14>MUST NOT</bcp14> claim closure while silently omitting a
-          reachable unresolved blocking objection.
+          A <tt>DECISION</tt> records an outcome and its declared closure.
+        </t>
+        <t>
+          Its payload <bcp14>MUST</bcp14> contain a non-empty
+          <tt>outcome</tt> string, a <tt>status</tt> value of
+          <tt>provisional</tt> or <tt>final</tt>, an
+          <tt>objection_dispositions</tt> array, and an
+          <tt>unresolved_issues</tt> array.
+        </t>
+        <t>
+          A final decision <bcp14>MUST NOT</bcp14> omit a reachable unresolved
+          blocking objection.
         </t>
       </section>
       <section>
         <name>FAILURE</name>
         <t>
-          A <tt>FAILURE</tt> records that a requested protocol operation
-          could not complete. Failure classes include malformed artifacts,
-          unsupported versions, unsupported extensions, unavailable
-          references, integrity failures, policy refusals, capability limits,
-          timeouts, and resource limits. A failure
-          <bcp14>MUST NOT</bcp14> be silently converted into success.
+          A <tt>FAILURE</tt> records that processing could not complete.
+        </t>
+        <t>
+          Its payload <bcp14>MUST</bcp14> contain non-empty <tt>code</tt>
+          and <tt>description</tt> strings and a Boolean
+          <tt>retryable</tt> member. A failure <bcp14>MUST NOT</bcp14> be
+          silently converted into success.
         </t>
       </section>
       <section>
         <name>TERMINATION</name>
         <t>
-          A <tt>TERMINATION</tt> records one terminal state:
-          <tt>completed</tt>, <tt>suspended</tt>, <tt>cancelled</tt>,
-          <tt>deadlock</tt>, or <tt>exhausted</tt>.
+          A <tt>TERMINATION</tt> payload <bcp14>MUST</bcp14> contain a
+          <tt>state</tt> value of <tt>completed</tt>, <tt>suspended</tt>,
+          <tt>cancelled</tt>, <tt>deadlock</tt>, or <tt>exhausted</tt>.
         </t>
         <t>
-          A completed termination <bcp14>MUST</bcp14> identify a final
+          A completed termination <bcp14>MUST</bcp14> reference a final
           decision. A deadlock or exhausted termination
-          <bcp14>MUST</bcp14> preserve the relevant unresolved blocking
+          <bcp14>MUST</bcp14> preserve relevant unresolved blocking
           objections.
         </t>
       </section>
@@ -545,39 +566,63 @@
     <section anchor="security">
       <name>Security Considerations</name>
       <t>
-        Implementations must consider artifact forgery, author impersonation,
-        replay, equivocation, malicious references, provenance spoofing,
-        prompt injection carried as evidence, evidence poisoning, role
-        hijacking, denial of service through unbounded graphs, adversarial
-        extensions, omitted artifacts, and false closure.
+        Relevant actors include artifact producers, recipients, closure
+        verifiers, orchestrators, evidence providers, storage operators, and
+        attackers able to submit or replay artifacts. Protected assets include
+        artifact integrity, provenance, decision closure, authorization
+        policy, private state, sensitive application data, and availability.
       </t>
       <t>
-        Content addressing detects changes to artifact content. It does not
-        authenticate an author, authorize an action, prove model identity, or
-        establish evidence trustworthiness. Authentication, signatures, key
-        discovery, authorization, and non-repudiation are outside this
-        revision.
+        Trust boundaries exist between private computation and shared
+        artifacts, transports and validators, external evidence and policy,
+        and artifact storage and closure verification.
       </t>
       <t>
-        Untrusted evidence must be processed as data rather than as authority
-        to modify system instructions, role policy, privacy policy, or
-        authorization state.
+        Threats include forgery, impersonation, replay, equivocation,
+        malicious references, provenance spoofing, prompt injection, evidence
+        poisoning, role hijacking, omitted objections, false closure,
+        adversarial extensions, and graph-based denial of service.
+      </t>
+      <t>
+        Implementations <bcp14>SHOULD</bcp14> authenticate producers when
+        attribution is required, reject identifier mismatches and cycles,
+        enforce resource limits, separate untrusted evidence from policy,
+        preserve blocking objections, and fail closed on unavailable required
+        references.
+      </t>
+      <t>
+        Content addressing does not establish identity, authorization,
+        freshness, non-repudiation, or evidence truth. See
+        <xref target="RFC3552" /> for security-consideration guidance.
       </t>
     </section>
     <section anchor="privacy">
       <name>Privacy Considerations</name>
       <t>
-        A conforming implementation <bcp14>MUST NOT</bcp14> require disclosure
-        of private chain-of-thought or private model state for interoperability.
+        Public means shared at the interoperability boundary and does not imply
+        unrestricted Internet disclosure. A conforming implementation
+        <bcp14>MUST NOT</bcp14> require disclosure of private chain-of-thought
+        or private model state.
       </t>
       <t>
-        Public artifacts can contain sensitive information even when they
-        contain no chain-of-thought. Implementations must apply applicable
-        disclosure, minimization, authorization, and retention policies before
-        publication or forwarding.
+        Implementations <bcp14>SHOULD</bcp14> minimize payloads and provider
+        metadata, disclose artifacts only to authorized recipients, define
+        retention and deletion policy, and protect logs and backups.
       </t>
       <t>
-        This revision defines no wire-level privacy classification labels.
+        Stable identifiers and reference graphs can create linkability and
+        correlation across sessions. Deployments <bcp14>SHOULD</bcp14> avoid
+        unnecessary personal or cross-context identifiers and document
+        secondary-use restrictions.
+      </t>
+      <t>
+        Sanitization occurs before publication or forwarding. Removing
+        chain-of-thought alone does not remove personal data, secrets,
+        confidential evidence, or sensitive metadata.
+      </t>
+      <t>
+        This revision defines no wire-level privacy labels. See
+        <xref target="RFC6973" /> for privacy-design guidance.
       </t>
     </section>
     <section>
@@ -686,6 +731,27 @@
       </references>
       <references>
         <name>Informative References</name>
+        <reference anchor="RFC3552" target="https://www.rfc-editor.org/info/rfc3552">
+          <front>
+            <title>Guidelines for Writing RFC Text on Security Considerations</title>
+            <author initials="E." surname="Rescorla" fullname="Eric Rescorla" />
+            <author initials="B." surname="Korver" fullname="B. Korver" />
+            <date month="July" year="2003" />
+          </front>
+          <seriesInfo name="BCP" value="72" />
+          <seriesInfo name="RFC" value="3552" />
+          <seriesInfo name="DOI" value="10.17487/RFC3552" />
+        </reference>
+        <reference anchor="RFC6973" target="https://www.rfc-editor.org/info/rfc6973">
+          <front>
+            <title>Privacy Considerations for Internet Protocols</title>
+            <author initials="A." surname="Cooper" fullname="Alissa Cooper" />
+            <author initials="H." surname="Tschofenig" fullname="Hannes Tschofenig" />
+            <date month="July" year="2013" />
+          </front>
+          <seriesInfo name="RFC" value="6973" />
+          <seriesInfo name="DOI" value="10.17487/RFC6973" />
+        </reference>
         <reference anchor="RFC8785" target="https://www.rfc-editor.org/info/rfc8785">
           <front>
             <title>JSON Canonicalization Scheme (JCS)</title>

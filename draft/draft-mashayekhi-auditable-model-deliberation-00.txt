@@ -74,38 +74,38 @@ Table of Contents
      1.2.  Scope . . . . . . . . . . . . . . . . . . . . . . . . . .   3
      1.3.  Non-Goals . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Conventions and Terminology . . . . . . . . . . . . . . . . .   4
-   3.  Architectural Invariant . . . . . . . . . . . . . . . . . . .   4
+   3.  Architectural Invariant . . . . . . . . . . . . . . . . . . .   5
    4.  Abstract Artifact Model . . . . . . . . . . . . . . . . . . .   5
      4.1.  Reference Object  . . . . . . . . . . . . . . . . . . . .   5
-     4.2.  Example Shape . . . . . . . . . . . . . . . . . . . . . .   5
+     4.2.  Example Shape . . . . . . . . . . . . . . . . . . . . . .   6
    5.  Core Artifact Semantics . . . . . . . . . . . . . . . . . . .   6
      5.1.  CLAIM . . . . . . . . . . . . . . . . . . . . . . . . . .   6
      5.2.  EVIDENCE  . . . . . . . . . . . . . . . . . . . . . . . .   6
      5.3.  OBJECTION . . . . . . . . . . . . . . . . . . . . . . . .   6
      5.4.  REVISION  . . . . . . . . . . . . . . . . . . . . . . . .   6
-     5.5.  DECISION  . . . . . . . . . . . . . . . . . . . . . . . .   6
+     5.5.  DECISION  . . . . . . . . . . . . . . . . . . . . . . . .   7
      5.6.  FAILURE . . . . . . . . . . . . . . . . . . . . . . . . .   7
      5.7.  TERMINATION . . . . . . . . . . . . . . . . . . . . . . .   7
    6.  Evidence Provenance . . . . . . . . . . . . . . . . . . . . .   7
-   7.  Immutable History . . . . . . . . . . . . . . . . . . . . . .   7
+   7.  Immutable History . . . . . . . . . . . . . . . . . . . . . .   8
    8.  Reference Graph and Decision Closure  . . . . . . . . . . . .   8
    9.  Failure and Recovery  . . . . . . . . . . . . . . . . . . . .   8
    10. Versioning and Extensions . . . . . . . . . . . . . . . . . .   8
-   11. Restricted Canonical JSON and Artifact Identity . . . . . . .   8
-     11.1.  Admitted Values  . . . . . . . . . . . . . . . . . . . .   8
+   11. Restricted Canonical JSON and Artifact Identity . . . . . . .   9
+     11.1.  Admitted Values  . . . . . . . . . . . . . . . . . . . .   9
      11.2.  Input Rejection  . . . . . . . . . . . . . . . . . . . .   9
      11.3.  Unicode Normalization and Member Ordering  . . . . . . .   9
-     11.4.  Serialization  . . . . . . . . . . . . . . . . . . . . .   9
+     11.4.  Serialization  . . . . . . . . . . . . . . . . . . . . .  10
      11.5.  Identifier Calculation . . . . . . . . . . . . . . . . .  10
      11.6.  Identifier Verification  . . . . . . . . . . . . . . . .  10
      11.7.  Profile Boundary . . . . . . . . . . . . . . . . . . . .  10
-   12. Conformance . . . . . . . . . . . . . . . . . . . . . . . . .  10
+   12. Conformance . . . . . . . . . . . . . . . . . . . . . . . . .  11
    13. Related Work and Protocol Boundaries  . . . . . . . . . . . .  11
    14. Experimental Evidence and Limitations . . . . . . . . . . . .  11
-   15. Operational Considerations  . . . . . . . . . . . . . . . . .  11
+   15. Operational Considerations  . . . . . . . . . . . . . . . . .  12
    16. Security Considerations . . . . . . . . . . . . . . . . . . .  12
-   17. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  12
-   18. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
+   17. Privacy Considerations  . . . . . . . . . . . . . . . . . . .  13
+   18. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
 
 
 
@@ -114,10 +114,10 @@ Mashayekhi              Expires 13 February 2027                [Page 2]
 Internet-Draft        Auditable Model Deliberation           August 2026
 
 
-   19. Future Work . . . . . . . . . . . . . . . . . . . . . . . . .  12
-   20. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  13
-   21. References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
-     21.1.  Normative References . . . . . . . . . . . . . . . . . .  13
+   19. Future Work . . . . . . . . . . . . . . . . . . . . . . . . .  13
+   20. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
+   21. References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
+     21.1.  Normative References . . . . . . . . . . . . . . . . . .  14
      21.2.  Informative References . . . . . . . . . . . . . . . . .  14
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  15
 
@@ -198,7 +198,9 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    specifications cited above; see [BCP14].
 
    Public artifact  An inspectable protocol object intended to cross the
-      interoperability boundary.
+      interoperability boundary.  Public means shared with the
+      authorized participants at that boundary; it does not imply
+      unrestricted Internet disclosure.
 
    Private model state  Implementation-internal material not required
       for protocol interoperability.
@@ -213,10 +215,8 @@ Internet-Draft        Auditable Model Deliberation           August 2026
       claiming closed status until the objection receives a public
       disposition.
 
-3.  Architectural Invariant
 
-   A decision MUST be auditable from public artifacts without requiring
-   private model state.
+
 
 
 
@@ -225,6 +225,11 @@ Mashayekhi              Expires 13 February 2027                [Page 4]
 
 Internet-Draft        Auditable Model Deliberation           August 2026
 
+
+3.  Architectural Invariant
+
+   A decision MUST be auditable from public artifacts without requiring
+   private model state.
 
    An implementation MAY use arbitrary private computation to produce an
    artifact.  It MUST NOT require another participant to disclose
@@ -269,11 +274,6 @@ Internet-Draft        Auditable Model Deliberation           August 2026
 
    *  considers; or
 
-   *  decides.
-
-4.2.  Example Shape
-
-
 
 
 
@@ -281,6 +281,10 @@ Mashayekhi              Expires 13 February 2027                [Page 5]
 
 Internet-Draft        Auditable Model Deliberation           August 2026
 
+
+   *  decides.
+
+4.2.  Example Shape
 
    {
      "protocol_version": "0.1",
@@ -300,35 +304,31 @@ Internet-Draft        Auditable Model Deliberation           August 2026
 
 5.1.  CLAIM
 
-   A CLAIM introduces a public proposition that can be supported,
-   challenged, revised, or decided.  A claim SHOULD be specific enough
-   for another participant to identify what is contested.
+   A CLAIM introduces a proposition that can be supported, challenged,
+   revised, or decided.
+
+   Its payload MUST contain a non-empty statement string.
 
 5.2.  EVIDENCE
 
-   An EVIDENCE artifact provides public support relevant to one or more
-   claims.  It MUST carry one provenance class from Section 6.
+   An EVIDENCE artifact provides support relevant to one or more
+   artifacts.
+
+   Its payload MUST contain a non-empty content string and one
+   provenance_class value from Section 6.  Supporting evidence MUST
+   carry an applicable supports reference.
 
 5.3.  OBJECTION
 
-   An OBJECTION challenges a claim, evidence item, revision, decision,
-   or protocol assumption.  It MAY be marked blocking.  A blocking
-   objection MUST receive a public disposition or remain visibly
-   unresolved.
+   An OBJECTION challenges an artifact or protocol assumption.
+
+   Its payload MUST contain a non-empty statement string and a Boolean
+   blocking member.  It MUST carry at least one objects-to reference.
 
 5.4.  REVISION
 
-   A REVISION creates a new public position and MUST NOT mutate the
-   artifact it revises.  It SHOULD reference the artifacts it modifies
-   or supersedes.  A revision MAY reference multiple prior artifacts;
-   this document defines no separate merge type.
+   A REVISION creates a new position without mutating history.
 
-5.5.  DECISION
-
-   A DECISION records an outcome, its public basis, relevant references,
-   blocking-objection dispositions, and unresolved issues.  It MUST NOT
-   claim closure while silently omitting a reachable unresolved blocking
-   objection.
 
 
 
@@ -338,22 +338,36 @@ Mashayekhi              Expires 13 February 2027                [Page 6]
 Internet-Draft        Auditable Model Deliberation           August 2026
 
 
+   Its payload MUST contain a non-empty statement string.  It MUST carry
+   at least one revises or supersedes reference.
+
+5.5.  DECISION
+
+   A DECISION records an outcome and its declared closure.
+
+   Its payload MUST contain a non-empty outcome string, a status value
+   of provisional or final, an objection_dispositions array, and an
+   unresolved_issues array.
+
+   A final decision MUST NOT omit a reachable unresolved blocking
+   objection.
+
 5.6.  FAILURE
 
-   A FAILURE records that a requested protocol operation could not
-   complete.  Failure classes include malformed artifacts, unsupported
-   versions, unsupported extensions, unavailable references, integrity
-   failures, policy refusals, capability limits, timeouts, and resource
-   limits.  A failure MUST NOT be silently converted into success.
+   A FAILURE records that processing could not complete.
+
+   Its payload MUST contain non-empty code and description strings and a
+   Boolean retryable member.  A failure MUST NOT be silently converted
+   into success.
 
 5.7.  TERMINATION
 
-   A TERMINATION records one terminal state: completed, suspended,
-   cancelled, deadlock, or exhausted.
+   A TERMINATION payload MUST contain a state value of completed,
+   suspended, cancelled, deadlock, or exhausted.
 
-   A completed termination MUST identify a final decision.  A deadlock
-   or exhausted termination MUST preserve the relevant unresolved
-   blocking objections.
+   A completed termination MUST reference a final decision.  A deadlock
+   or exhausted termination MUST preserve relevant unresolved blocking
+   objections.
 
 6.  Evidence Provenance
 
@@ -372,6 +386,14 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    HYPOTHESIS  A proposition offered for future validation rather than
       as an observed result.
 
+
+
+
+Mashayekhi              Expires 13 February 2027                [Page 7]
+
+Internet-Draft        Auditable Model Deliberation           August 2026
+
+
    Model-generated quantitative language MUST NOT be represented as
    independently observed empirical evidence unless it is separately
    grounded in an admissible source.
@@ -384,15 +406,6 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    An identical resubmission MAY be treated as idempotent.  A changed
    body MUST receive a new identity.  Corrections MUST be new artifacts
    with explicit references to prior artifacts.
-
-
-
-
-
-Mashayekhi              Expires 13 February 2027                [Page 7]
-
-Internet-Draft        Auditable Model Deliberation           August 2026
-
 
 8.  Reference Graph and Decision Closure
 
@@ -427,6 +440,16 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    extensions MUST NOT change core semantics.  This document defines no
    critical-extension mechanism and requests no extension registry.
 
+
+
+
+
+
+Mashayekhi              Expires 13 February 2027                [Page 8]
+
+Internet-Draft        Auditable Model Deliberation           August 2026
+
+
 11.  Restricted Canonical JSON and Artifact Identity
 
    JSON processing follows [RFC8259] subject to the additional
@@ -438,17 +461,6 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    An admitted value is null, a Boolean, a Unicode string, an integer,
    an array of admitted values, or an object with string member names
    and admitted values.
-
-
-
-
-
-
-
-Mashayekhi              Expires 13 February 2027                [Page 8]
-
-Internet-Draft        Auditable Model Deliberation           August 2026
-
 
    Floating-point values, decimal fractions, exponents, non-finite
    numbers, comments, binary values, and implementation-specific JSON
@@ -486,6 +498,14 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    If distinct input member names become identical after normalization,
    the object MUST be rejected.
 
+
+
+
+Mashayekhi              Expires 13 February 2027                [Page 9]
+
+Internet-Draft        Auditable Model Deliberation           August 2026
+
+
    Object members MUST be sorted by ascending unsigned bytes of the
    normalized, unescaped member name encoded as UTF-8.
 
@@ -496,15 +516,6 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    Other control characters U+0000 through U+001F use lowercase \u00xx
    form.  Other Unicode scalar values are emitted directly as UTF-8.
    Solidus is not escaped.
-
-
-
-
-
-Mashayekhi              Expires 13 February 2027                [Page 9]
-
-Internet-Draft        Auditable Model Deliberation           August 2026
-
 
    Integers use base-10 with no plus sign, leading zero, or exponent.
    Arrays retain order.  Commas and colons have no surrounding
@@ -543,6 +554,14 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    vectors.  Passing those vectors establishes tested profile behavior
    for one implementation, not independent interoperability.
 
+
+
+
+Mashayekhi              Expires 13 February 2027               [Page 10]
+
+Internet-Draft        Auditable Model Deliberation           August 2026
+
+
 12.  Conformance
 
    A conformance claim MUST identify one or more targets:
@@ -552,15 +571,6 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    2.  artifact-semantic validation conformance; or
 
    3.  closure-verification conformance.
-
-
-
-
-
-Mashayekhi              Expires 13 February 2027               [Page 10]
-
-Internet-Draft        Auditable Model Deliberation           August 2026
-
 
    Canonical-profile conformance MUST NOT be presented as complete
    protocol conformance.  Independent cross-implementation
@@ -600,6 +610,14 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    security, privacy safety, universal compatibility, or independent
    interoperability.
 
+
+
+
+Mashayekhi              Expires 13 February 2027               [Page 11]
+
+Internet-Draft        Auditable Model Deliberation           August 2026
+
+
 15.  Operational Considerations
 
    Implementations should define limits for:
@@ -609,14 +627,6 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    *  graph depth;
 
    *  closure size;
-
-
-
-
-Mashayekhi              Expires 13 February 2027               [Page 11]
-
-Internet-Draft        Auditable Model Deliberation           August 2026
-
 
    *  reference fan-out;
 
@@ -629,33 +639,63 @@ Internet-Draft        Auditable Model Deliberation           August 2026
 
 16.  Security Considerations
 
-   Implementations must consider artifact forgery, author impersonation,
-   replay, equivocation, malicious references, provenance spoofing,
-   prompt injection carried as evidence, evidence poisoning, role
-   hijacking, denial of service through unbounded graphs, adversarial
-   extensions, omitted artifacts, and false closure.
+   Relevant actors include artifact producers, recipients, closure
+   verifiers, orchestrators, evidence providers, storage operators, and
+   attackers able to submit or replay artifacts.  Protected assets
+   include artifact integrity, provenance, decision closure,
+   authorization policy, private state, sensitive application data, and
+   availability.
 
-   Content addressing detects changes to artifact content.  It does not
-   authenticate an author, authorize an action, prove model identity, or
-   establish evidence trustworthiness.  Authentication, signatures, key
-   discovery, authorization, and non-repudiation are outside this
-   revision.
+   Trust boundaries exist between private computation and shared
+   artifacts, transports and validators, external evidence and policy,
+   and artifact storage and closure verification.
 
-   Untrusted evidence must be processed as data rather than as authority
-   to modify system instructions, role policy, privacy policy, or
-   authorization state.
+   Threats include forgery, impersonation, replay, equivocation,
+   malicious references, provenance spoofing, prompt injection, evidence
+   poisoning, role hijacking, omitted objections, false closure,
+   adversarial extensions, and graph-based denial of service.
+
+   Implementations SHOULD authenticate producers when attribution is
+   required, reject identifier mismatches and cycles, enforce resource
+   limits, separate untrusted evidence from policy, preserve blocking
+   objections, and fail closed on unavailable required references.
+
+   Content addressing does not establish identity, authorization,
+   freshness, non-repudiation, or evidence truth.  See [RFC3552] for
+   security-consideration guidance.
+
+
+
+
+
+
+Mashayekhi              Expires 13 February 2027               [Page 12]
+
+Internet-Draft        Auditable Model Deliberation           August 2026
+
 
 17.  Privacy Considerations
 
-   A conforming implementation MUST NOT require disclosure of private
-   chain-of-thought or private model state for interoperability.
+   Public means shared at the interoperability boundary and does not
+   imply unrestricted Internet disclosure.  A conforming implementation
+   MUST NOT require disclosure of private chain-of-thought or private
+   model state.
 
-   Public artifacts can contain sensitive information even when they
-   contain no chain-of-thought.  Implementations must apply applicable
-   disclosure, minimization, authorization, and retention policies
-   before publication or forwarding.
+   Implementations SHOULD minimize payloads and provider metadata,
+   disclose artifacts only to authorized recipients, define retention
+   and deletion policy, and protect logs and backups.
 
-   This revision defines no wire-level privacy classification labels.
+   Stable identifiers and reference graphs can create linkability and
+   correlation across sessions.  Deployments SHOULD avoid unnecessary
+   personal or cross-context identifiers and document secondary-use
+   restrictions.
+
+   Sanitization occurs before publication or forwarding.  Removing
+   chain-of-thought alone does not remove personal data, secrets,
+   confidential evidence, or sensitive metadata.
+
+   This revision defines no wire-level privacy labels.  See [RFC6973]
+   for privacy-design guidance.
 
 18.  IANA Considerations
 
@@ -666,13 +706,6 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    Work deferred beyond revision -00 includes:
 
    *  authentication and signature profiles;
-
-
-
-Mashayekhi              Expires 13 February 2027               [Page 12]
-
-Internet-Draft        Auditable Model Deliberation           August 2026
-
 
    *  transport bindings and media types;
 
@@ -689,6 +722,13 @@ Internet-Draft        Auditable Model Deliberation           August 2026
    *  independent implementations; and
 
    *  cross-implementation testing.
+
+
+
+Mashayekhi              Expires 13 February 2027               [Page 13]
+
+Internet-Draft        Auditable Model Deliberation           August 2026
+
 
 20.  Acknowledgements
 
@@ -720,16 +760,6 @@ Internet-Draft        Auditable Model Deliberation           August 2026
               DOI 10.17487/RFC8259, December 2017,
               <https://www.rfc-editor.org/info/rfc8259>.
 
-
-
-
-
-
-Mashayekhi              Expires 13 February 2027               [Page 13]
-
-Internet-Draft        Auditable Model Deliberation           August 2026
-
-
    [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
               10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
               2003, <https://www.rfc-editor.org/info/rfc3629>.
@@ -745,6 +775,25 @@ Internet-Draft        Auditable Model Deliberation           August 2026
               <https://www.unicode.org/reports/tr15/>.
 
 21.2.  Informative References
+
+
+
+
+
+
+Mashayekhi              Expires 13 February 2027               [Page 14]
+
+Internet-Draft        Auditable Model Deliberation           August 2026
+
+
+   [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
+              Text on Security Considerations", BCP 72, RFC 3552,
+              DOI 10.17487/RFC3552, July 2003,
+              <https://www.rfc-editor.org/info/rfc3552>.
+
+   [RFC6973]  Cooper, A. and H. Tschofenig, "Privacy Considerations for
+              Internet Protocols", RFC 6973, DOI 10.17487/RFC6973, July
+              2013, <https://www.rfc-editor.org/info/rfc6973>.
 
    [RFC8785]  Rundgren, A., Jordan, B., and S. Erdtman, "JSON
               Canonicalization Scheme (JCS)", RFC 8785,
@@ -777,61 +826,12 @@ Internet-Draft        Auditable Model Deliberation           August 2026
               Progress, Internet-Draft, draft-c4tz-marc-02, May 2026,
               <https://datatracker.ietf.org/doc/draft-c4tz-marc/>.
 
-
-
-
-
-Mashayekhi              Expires 13 February 2027               [Page 14]
-
-Internet-Draft        Auditable Model Deliberation           August 2026
-
-
 Author's Address
 
    Mohsen Mashayekhi
    Independent Researcher
    Email: mmohsen.m@gmail.com
    URI:   https://github.com/MasonMash/MSB
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

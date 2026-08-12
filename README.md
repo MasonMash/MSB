@@ -16,7 +16,7 @@ The project currently has three distinct layers:
 |---|---|---|
 | MSB | The research project and public repository | Active research |
 | Current research profile | Candidate artifact semantics and technical contracts used to test the research thesis | Experimental |
-| Future standards proposal | A possible independently named interoperability specification derived from sufficient evidence | Not yet authored or submitted |
+| Individual Internet-Draft candidate | Independently named experimental interoperability specification derived from the research profile | Authored and validated; not submitted |
 
 Keeping these layers separate prevents experimental design choices from being mistaken for settled standards requirements.
 
@@ -222,7 +222,7 @@ The project's next controlled objective is to complete and internally reconcile 
 - security and privacy analysis; and
 - contribution and review guidance.
 
-After that repository phase is complete, the project intends to author and publish its own independently named Internet-Draft `-00`.
+The project has authored and locally validated an independently named Internet-Draft `-00` candidate. It has not been submitted to the IETF Datatracker.
 
 Publication of an Internet-Draft would begin public standards discussion. It would not imply IETF endorsement, adoption, consensus, or standards status.
 
@@ -239,7 +239,7 @@ Progress toward that draft is evidence-gated:
 | Draft preparation | Scope and normative requirements are supported by available evidence |
 | Submission | An independently named Internet-Draft `-00` is authored and published by the project |
 
-The future proposal's name, final vocabulary, conformance structure, and standards path remain open until the relevant evidence and review gates are satisfied.
+The candidate document name and revision `-00` vocabulary are fixed for submission review. Final protocol naming, later conformance structure, and any standards path remain open.
 
 ## Open Research Questions
 
@@ -266,12 +266,14 @@ Current open questions include:
 | [`spec/INTERNET-DRAFT-00-DECISIONS.md`](spec/INTERNET-DRAFT-00-DECISIONS.md) | Frozen technical and publication boundaries for the first individual Internet-Draft |
 | [`draft/draft-mashayekhi-auditable-model-deliberation-00.xml`](draft/draft-mashayekhi-auditable-model-deliberation-00.xml) | RFCXML v3 source for the first individual Internet-Draft |
 | [`draft/VALIDATION.md`](draft/VALIDATION.md) | Reproducible render and submission-readiness validation record |
-| `draft/SUBMISSION-READINESS.md` | Final pre-submission evidence and authorization gate |
-| `draft/SUBMISSION-CHECKSUMS.sha256` | Integrity manifest for the submission artifacts |
+| [`draft/SUBMISSION-READINESS.md`](draft/SUBMISSION-READINESS.md) | Final pre-submission evidence and authorization gate |
+| [`draft/SUBMISSION-CHECKSUMS.sha256`](draft/SUBMISSION-CHECKSUMS.sha256) | Integrity manifest for the submission artifacts |
 | [`tools/msb_verify.py`](tools/msb_verify.py) | Reference canonicalization and `artifact_id` tool |
 | [`test-vectors/`](test-vectors/) | Public canonical-profile test inputs |
 | [`research/EVIDENCE_LEDGER.md`](research/EVIDENCE_LEDGER.md) | Deduplicated publication-facing evidence |
 | [`research/METHODOLOGY.md`](research/METHODOLOGY.md) | Experimental design and evidence policy |
+| [`research/DESIGN-RATIONALE.md`](research/DESIGN-RATIONALE.md) | Informative problem analysis, design choices, and deferred concepts |
+| [`research/EVALUATION-PLAN.md`](research/EVALUATION-PLAN.md) | Predeclared future evaluation methods and evidence boundaries |
 | [`research/EVDRAN-TO-MSB-TRACEABILITY.md`](research/EVDRAN-TO-MSB-TRACEABILITY.md) | Research lineage and disposition of the Evdran paper concepts |
 | [`evidence/manifest.json`](evidence/manifest.json) | Cryptographic evidence lineage |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution and review requirements |

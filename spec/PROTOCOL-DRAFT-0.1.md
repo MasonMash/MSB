@@ -138,90 +138,68 @@ An implementation MUST NOT require another participant to disclose private chain
 
 ### 4.1 CLAIM
 
-A `CLAIM` introduces a public proposition that can be referenced, supported, challenged, revised, or decided upon.
-
-A claim SHOULD be specific enough that another participant can identify what is being contested.
+A `CLAIM` payload MUST contain a non-empty string member named `statement`.
+It introduces a proposition that can be supported, challenged, revised, or
+decided. Additional payload members MUST NOT change the meaning of
+`statement`.
 
 ### 4.2 EVIDENCE
 
-An `EVIDENCE` artifact provides public support relevant to one or more claims.
+An `EVIDENCE` payload MUST contain:
 
-Evidence MUST carry explicit provenance classification.
+- a non-empty string member named `content`; and
+- a `provenance_class` member containing one provenance class from Section 9.
 
-The research profile defines four provenance classes:
-
-- `TRACE_VERIFIED_OBSERVATION`
-- `MODEL_GENERATED_ANALYSIS`
-- `EXTERNAL_EVIDENCE`
-- `HYPOTHESIS`
-
-A model-generated analysis does not become an observed fact merely because it contains numbers, a simulation, or benchmark-like language.
+An evidence artifact supporting another artifact MUST carry an applicable
+`supports` reference. Source locators, retrieval time, and integrity metadata
+MAY be included when available.
 
 ### 4.3 OBJECTION
 
-An `OBJECTION` records a challenge to a claim, evidence item, revision, decision, or protocol assumption.
+An `OBJECTION` payload MUST contain:
 
-An objection MAY be marked blocking.
+- a non-empty string member named `statement`; and
+- a Boolean member named `blocking`.
 
-A blocking objection MUST either receive a public disposition or remain visible as unresolved when a decision is issued.
+It MUST contain at least one `objects-to` reference. A blocking objection MUST
+receive a public disposition or remain visibly unresolved.
 
 ### 4.4 REVISION
 
-A `REVISION` represents a change to a prior public position.
-
-A revision MUST create a new artifact.
-
-It MUST NOT mutate the historical artifact it revises.
-
-The revision SHOULD reference the artifact or artifacts that it supersedes or modifies.
+A `REVISION` payload MUST contain a non-empty string member named `statement`.
+It MUST contain at least one `revises` or `supersedes` reference and MUST NOT
+mutate the artifact being revised.
 
 ### 4.5 DECISION
 
-A `DECISION` records a public disposition over the deliberation state.
+A `DECISION` payload MUST contain:
 
-A decision SHOULD identify:
+- a non-empty string member named `outcome`;
+- a `status` member equal to `provisional` or `final`;
+- an array member named `objection_dispositions`; and
+- an array member named `unresolved_issues`.
 
-- the outcome;
-- the public basis;
-- relevant artifact references;
-- dispositions of blocking objections; and
-- unresolved issues.
-
-A decision MUST NOT claim closure while silently omitting a blocking objection reachable from its declared closure set.
+Each objection disposition MUST identify an objection and its disposition. A
+final decision MUST NOT omit a reachable unresolved blocking objection.
 
 ### 4.6 FAILURE
 
-A `FAILURE` records that a requested protocol operation could not be completed.
+A `FAILURE` payload MUST contain:
 
-The research profile includes failure classes for:
+- a non-empty string member named `code`;
+- a non-empty string member named `description`; and
+- a Boolean member named `retryable`.
 
-- malformed artifacts;
-- unsupported versions;
-- unsupported extensions;
-- unresolved references;
-- integrity failures;
-- policy refusals;
-- capability limits;
-- timeouts; and
-- resource limits.
-
-Failure is a protocol outcome. It MUST NOT be silently converted into success.
+Failure codes are profile-defined strings. A failure MUST NOT be silently
+converted into success.
 
 ### 4.7 TERMINATION
 
-A `TERMINATION` artifact records the terminal state of a deliberation.
+A `TERMINATION` payload MUST contain a `state` member equal to `completed`,
+`suspended`, `cancelled`, `deadlock`, or `exhausted`.
 
-The research profile distinguishes:
-
-- `completed`
-- `suspended`
-- `cancelled`
-- `deadlock`
-- `exhausted`
-
-A `completed` termination MUST identify a final decision.
-
-A `deadlock` or `exhausted` termination MUST preserve the unresolved blocking objections relevant to termination.
+A completed termination MUST reference a final decision. A deadlock or
+exhausted termination MUST preserve relevant unresolved blocking objections.
 
 ### 4.8 Abstract Artifact Model
 
@@ -433,35 +411,64 @@ Passing either test surface does not establish interoperability with an independ
 
 ## 14. Security Considerations
 
-Structured deliberation introduces security properties that do not disappear merely because the artifact format is public.
+The relevant actors include artifact producers, recipients, closure verifiers,
+orchestrators, evidence providers, storage operators, and attackers able to
+submit or replay artifacts.
 
-A production profile will need to address at least:
+Protected assets include artifact integrity, provenance metadata, decision
+closure, authorization policy, private model state, sensitive application
+data, and availability of validation and storage resources.
 
-- artifact forgery;
-- author impersonation;
-- replay;
-- equivocation;
-- malicious references;
-- provenance spoofing;
-- prompt injection carried as evidence;
-- denial of service through unbounded artifact graphs;
-- adversarial extension use;
-- decision manipulation through omitted artifacts; and
-- trust assumptions around external evidence.
+Trust boundaries exist between model-private computation and shared artifacts,
+between transports and artifact validators, between external evidence and
+policy, and between artifact storage and closure verification.
 
-Content addressing provides integrity detection for artifact content but does not by itself establish author identity, authorization, or trustworthiness.
+Threats include forgery, impersonation, replay, equivocation, malicious
+references, provenance spoofing, prompt injection, evidence poisoning, role
+hijacking, omitted objections, false closure, adversarial extensions, and
+resource exhaustion.
 
-Those properties require separate mechanisms.
+Implementations SHOULD authenticate producers where deployment policy requires
+attribution, reject identifier mismatches and cycles, enforce size and graph
+limits, separate untrusted evidence from policy fields, preserve blocking
+objections, and fail closed on unavailable required references.
+
+Content addressing detects changes to artifact content but does not establish
+identity, authorization, freshness, non-repudiation, or evidence truth.
+Separate mechanisms are required for those properties.
+
+This analysis follows the threat-and-mitigation discipline described by
+RFC 3552.
 
 ## 15. Privacy Considerations
 
-The protocol is designed to minimize the information required to cross the model boundary.
+A shared artifact is public to the interoperability boundary; it is not
+necessarily appropriate for unrestricted Internet publication.
 
-A conforming interoperability profile MUST NOT require disclosure of private chain-of-thought.
+A conforming interoperability profile MUST NOT require disclosure of private
+chain-of-thought or private model state.
 
-Implementations SHOULD minimize unnecessary provider metadata and SHOULD apply an explicit sanitization boundary before persisting model responses as public artifacts.
+Implementations SHOULD minimize payloads and provider metadata, disclose
+artifacts only to authorized recipients, define retention and deletion policy,
+and protect logs and backups under the same policy as the artifacts they
+contain.
 
-A public artifact can still contain sensitive user information even when it contains no chain-of-thought. Application-level data minimization and disclosure policy therefore remain necessary.
+Stable artifact identifiers and reference graphs can increase linkability and
+correlation across sessions. Deployments SHOULD avoid unnecessary personal or
+cross-context identifiers and assess whether graph metadata reveals sensitive
+relationships.
+
+Operators SHOULD document secondary-use restrictions. Material collected for
+one deliberation MUST NOT be reused for unrelated profiling or training unless
+the applicable policy and authorization permit that use.
+
+Sanitization must occur before publication or forwarding. Removing
+chain-of-thought alone does not remove personal data, secrets, confidential
+evidence, or sensitive metadata.
+
+The P0-P3 research classes are informative and are not mandatory wire labels in
+revision `-00`. This analysis applies the privacy-design considerations of
+RFC 6973.
 
 ## 16. Operational Considerations
 
@@ -522,6 +529,13 @@ Before a standards-track freeze, the project should resolve at least:
 **[RFC2119]** Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.
 
 **[RFC8174]** Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017.
+
+**[RFC3552]** Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on
+Security Considerations", BCP 72, RFC 3552, July 2003.
+
+**[RFC6973]** Cooper, A., Tschofenig, H., Aboba, B., Peterson, J., Morris, J.,
+Hansen, M., and R. Smith, "Privacy Considerations for Internet Protocols",
+RFC 6973, July 2013.
 
 ### 20.2 Informative References
 
